@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Lazy-initialize to avoid module-level createClient crash during build
+let _supabase: SupabaseClient | null = null;
+function getSupabase(): SupabaseClient {
+  if (!_supabase) {
+    _supabase = createClient(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+  }
+  return _supabase;
+}
 
 const TABLE = "waitlist_users";
 
@@ -15,7 +22,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const { data: users, error } = await supabase
+    const sb = getSupabase();
+    const { data: users, error } = await sb
       .from(TABLE)
       .select("position, email, first_name, referral_code, referral_count, referred_by, created_at")
       .order("position", { ascending: true });
@@ -28,7 +36,7 @@ export async function GET(request: NextRequest) {
     );
     let referrerMap: Record<string, string> = {};
     if (referrerIds.length > 0) {
-      const { data: referrers } = await supabase
+      const { data: referrers } = await sb
         .from(TABLE)
         .select("id, email")
         .in("id", referrerIds);

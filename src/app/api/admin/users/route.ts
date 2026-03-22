@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Lazy-initialize to avoid module-level createClient crash during build
+let _supabase: SupabaseClient | null = null;
+function getSupabase(): SupabaseClient {
+  if (!_supabase) {
+    _supabase = createClient(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+  }
+  return _supabase;
+}
 
 const TABLE = "waitlist_users";
 
@@ -20,9 +27,10 @@ export async function GET(request: NextRequest) {
   const offset = (page - 1) * limit;
 
   try {
-    const { count: totalCount } = await supabase.from(TABLE).select("id", { count: "exact", head: true });
+    const sb = getSupabase();
+    const { count: totalCount } = await sb.from(TABLE).select("id", { count: "exact", head: true });
 
-    const { data: users, error } = await supabase
+    const { data: users, error } = await sb
       .from(TABLE)
       .select("id, email, first_name, position, referral_code, referral_count, referred_by, created_at")
       .order("created_at", { ascending: false })
@@ -34,7 +42,7 @@ export async function GET(request: NextRequest) {
     const referrerIds = Array.from(new Set((users || []).map((u) => u.referred_by).filter(Boolean) as string[]));
     let referrerMap: Record<string, string> = {};
     if (referrerIds.length > 0) {
-      const { data: referrers } = await supabase
+      const { data: referrers } = await sb
         .from(TABLE)
         .select("id, email")
         .in("id", referrerIds);
