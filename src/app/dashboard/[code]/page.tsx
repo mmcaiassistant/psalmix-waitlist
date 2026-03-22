@@ -97,7 +97,7 @@ export default function DashboardPage({
           <section className="grid gap-4 sm:grid-cols-3">
             <PositionDisplay label="Current position" value={data?.position ?? 0} prefix="#" />
             <PositionDisplay
-              label="People ahead of you"
+              label={data?.peopleAhead === 1 ? "Person ahead of you" : "People ahead of you"}
               value={data?.peopleAhead ?? 0}
             />
             <PositionDisplay

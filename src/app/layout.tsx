@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 
@@ -7,6 +7,14 @@ const beVietnamPro = Be_Vietnam_Pro({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-display",
 });
+
+// Prevent the virtual keyboard from resizing the viewport and hiding the submit button.
+// "resizes-content" is the default on iOS; "overlays-content" keeps the layout stable.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  interactiveWidget: "resizes-visual",
+};
 
 export const metadata: Metadata = {
   title: "PsalMix — Family-Safe Music Streaming | Join the Waitlist",

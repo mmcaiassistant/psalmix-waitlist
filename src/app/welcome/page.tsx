@@ -52,7 +52,16 @@ export default function WelcomePage() {
   useEffect(() => {
     setOrigin(window.location.origin);
     const params = new URLSearchParams(window.location.search);
-    setCode(params.get("code") || "");
+    const c = params.get("code") || "";
+    setCode(c);
+    // Persist code in localStorage so the user can always return to their dashboard
+    if (c) {
+      try {
+        localStorage.setItem("psalmix_referral_code", c);
+      } catch {
+        // storage blocked — not critical
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -117,13 +126,28 @@ export default function WelcomePage() {
           {loading ? (
             <p className="mt-6 text-sm text-amber-700">Loading your stats…</p>
           ) : (
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <PositionDisplay label="Your position" value={data?.position ?? 0} prefix="#" />
-              <PositionDisplay
-                label="People ahead of you"
-                value={data?.peopleAhead ?? 0}
-              />
-            </div>
+            <>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <PositionDisplay label="Your position" value={data?.position ?? 0} prefix="#" />
+                <PositionDisplay
+                  label={data?.peopleAhead === 1 ? "Person ahead of you" : "People ahead of you"}
+                  value={data?.peopleAhead ?? 0}
+                />
+              </div>
+              {/* UX FIX: Let the user get back to their dashboard if they close and return */}
+              {code && (
+                <p className="mt-4 text-xs text-amber-600">
+                  Bookmark this page or{" "}
+                  <a
+                    href={`/dashboard/${code}`}
+                    className="underline font-semibold hover:text-amber-800 transition-colors"
+                  >
+                    visit your dashboard anytime
+                  </a>{" "}
+                  using your unique link.
+                </p>
+              )}
+            </>
           )}
 
           <div className="mt-8 flex flex-col gap-4">

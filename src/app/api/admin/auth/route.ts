@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ADMIN_SESSION_COOKIE, getSessionToken } from "@/lib/adminAuth";
+import { checkRateLimit, getIP } from "@/lib/rateLimit";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
@@ -8,12 +9,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Admin not configured" }, { status: 503 });
   }
 
+  // ── Brute force protection: 10 attempts per IP per 15 minutes ──────────
+  const ip = getIP(request);
+  const rl = checkRateLimit(`admin-auth:${ip}`, 10, 15 * 60 * 1000);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many login attempts — try again later." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) },
+      }
+    );
+  }
+
   try {
     const body = await request.json();
     const { password } = body;
 
-    if (!password || password !== ADMIN_PASSWORD) {
-      // Constant-time comparison would be ideal here but password is short enough
+    if (!password || typeof password !== "string" || password !== ADMIN_PASSWORD) {
       return NextResponse.json({ error: "Invalid password" }, { status: 401 });
     }
 

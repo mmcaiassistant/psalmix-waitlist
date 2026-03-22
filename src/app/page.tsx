@@ -112,6 +112,10 @@ function SignupForm({
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              // On mobile, scrollIntoView ensures the submit button stays visible when the keyboard opens
+              onFocus={(e) => {
+                setTimeout(() => e.target.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+              }}
               className="w-full bg-transparent border-none focus:ring-0 focus:outline-none text-white placeholder:text-slate-400 text-base"
               placeholder="Enter your email"
             />
