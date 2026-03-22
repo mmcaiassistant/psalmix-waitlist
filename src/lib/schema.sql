@@ -1,8 +1,9 @@
 -- PsalMix Waitlist Schema (local reference)
--- Run this migration in Supabase SQL Editor if not already applied:
+-- Run migrations in Supabase SQL Editor if not already applied:
+
 -- 1. Add first_name column (if missing)
 -- ALTER TABLE waitlist_users ADD COLUMN IF NOT EXISTS first_name TEXT;
---
+
 -- 2. Atomic referral count increment RPC:
 -- CREATE OR REPLACE FUNCTION increment_referral_count(user_id UUID)
 -- RETURNS INTEGER LANGUAGE plpgsql AS $$
@@ -13,6 +14,28 @@
 --   RETURN new_count;
 -- END;
 -- $$;
+
+-- 3. [RECOMMENDED] Atomic position assignment — prevents race conditions under
+--    concurrent signups. Run this in Supabase SQL Editor:
+--
+-- CREATE OR REPLACE FUNCTION get_next_position()
+-- RETURNS INTEGER LANGUAGE plpgsql AS $$
+-- DECLARE next_pos INTEGER;
+-- BEGIN
+--   SELECT COALESCE(MAX(position), 0) + 1 INTO next_pos FROM waitlist_users;
+--   RETURN next_pos;
+-- END;
+-- $$;
+--
+-- Once deployed, update the signup route to call:
+--   const { data: nextPos } = await supabase.rpc('get_next_position');
+--   const position = nextPos ?? 1;
+-- This replaces the current count-then-insert pattern.
+--
+-- Note: Two simultaneous signups from different emails could still land the
+-- same position if they both call get_next_position before either inserts.
+-- A true serial sequence (ALTER TABLE waitlist_users ALTER COLUMN position SET DEFAULT nextval('...'))
+-- is the gold-standard fix. For MVP scale (< 10k/day), this RPC is sufficient.
 --
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 

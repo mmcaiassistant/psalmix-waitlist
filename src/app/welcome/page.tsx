@@ -76,8 +76,8 @@ export default function WelcomePage() {
         if (!res.ok) throw new Error("Failed to fetch stats");
         const json = await res.json();
         setData(json);
-      } catch (error) {
-        console.error(error);
+      } catch {
+        // non-critical — show dashboard without live stats
       } finally {
         setLoading(false);
       }
@@ -99,8 +99,8 @@ export default function WelcomePage() {
           channel,
         }),
       });
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // share tracking is non-critical — silently ignore
     }
   };
 

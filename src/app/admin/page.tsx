@@ -114,9 +114,8 @@ export default function AdminDashboard() {
       setTopReferrers(statsData.topReferrers ?? []);
       setChartData(statsData.chartData ?? []);
       setRecentSignups(usersData.users ?? []);
-    } catch (err) {
-      console.error('Failed to load dashboard data:', err);
-      setDataError('Unexpected error loading data — check console');
+    } catch {
+      setDataError('Unexpected error loading data — please refresh the page.');
     } finally {
       setLoading(false);
     }
@@ -138,8 +137,7 @@ export default function AdminDashboard() {
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('Export failed:', err);
+    } catch {
       alert('Export failed — please try again');
     }
   };

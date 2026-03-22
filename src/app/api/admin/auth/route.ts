@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { timingSafeEqual } from "crypto";
 import { ADMIN_SESSION_COOKIE, getSessionToken } from "@/lib/adminAuth";
 import { checkRateLimit, getIP } from "@/lib/rateLimit";
 
@@ -26,7 +27,21 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { password } = body;
 
-    if (!password || typeof password !== "string" || password !== ADMIN_PASSWORD) {
+    // Use constant-time comparison to prevent timing attacks
+    const passwordValid =
+      password &&
+      typeof password === "string" &&
+      (() => {
+        try {
+          const a = Buffer.from(password);
+          const b = Buffer.from(ADMIN_PASSWORD!);
+          return a.length === b.length && timingSafeEqual(a, b);
+        } catch {
+          return false;
+        }
+      })();
+
+    if (!passwordValid) {
       return NextResponse.json({ error: "Invalid password" }, { status: 401 });
     }
 

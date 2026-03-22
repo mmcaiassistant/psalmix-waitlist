@@ -74,8 +74,7 @@ export async function GET(
       peopleAhead: positionStats.peopleAhead,
       movedUpBy: positionStats.movedUpBy,
     });
-  } catch (error) {
-    console.error(error);
+  } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

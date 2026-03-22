@@ -1,7 +1,3 @@
-// Updated signup route with FlowDesk integration
-// BACKUP: Original route is at route.ts
-// To use this version: rename route.ts to route-backup.ts and this file to route.ts
-
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { addSubscriberToFlowDesk, updateReferralCount } from "@/lib/flodesk";
@@ -90,8 +86,8 @@ export async function POST(request: Request) {
         ? firstName
         : undefined;
 
-    // Mock mode for preview
-    if (process.env.NEXT_PUBLIC_MOCK_MODE === "true") {
+    // Mock mode for preview (use server-only env var, not NEXT_PUBLIC_)
+    if (process.env.MOCK_MODE === "true") {
       const mockCode = generateReferralCode();
       const mockPosition = Math.floor(Math.random() * 500) + 2848;
       return NextResponse.json({
@@ -180,8 +176,18 @@ export async function POST(request: Request) {
       .single();
 
     if (error) {
-      console.error("Supabase insert error:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      console.error("Supabase insert error:", error.code, error.details);
+      // Do not expose DB internals — check for duplicate email (code 23505)
+      if (error.code === "23505") {
+        return NextResponse.json(
+          { error: "This email is already on the waitlist." },
+          { status: 409 }
+        );
+      }
+      return NextResponse.json(
+        { error: "Something went wrong — please try again." },
+        { status: 500 }
+      );
     }
 
     // ✨ Sync to FlowDesk (non-blocking - don't fail signup if FlowDesk fails)

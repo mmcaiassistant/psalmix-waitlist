@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 
 export async function GET() {
   // Mock mode for preview
-  if (process.env.NEXT_PUBLIC_MOCK_MODE === 'true') {
+  if (process.env.MOCK_MODE === 'true') {
     return NextResponse.json({ total: 2847 });
   }
 
@@ -12,7 +12,8 @@ export async function GET() {
     .select("id", { count: "exact", head: true });
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Stats fetch error:", error.code);
+    return NextResponse.json({ error: "Failed to fetch stats" }, { status: 500 });
   }
 
   return NextResponse.json({ total: count ?? 0 });

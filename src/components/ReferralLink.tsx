@@ -14,8 +14,8 @@ export default function ReferralLink({ url }: ReferralLinkProps) {
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // clipboard access denied — silently ignore
     }
   };
 

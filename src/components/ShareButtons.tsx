@@ -21,8 +21,8 @@ export default function ShareButtons({ url, onShare }: ShareButtonsProps) {
       setCopied(true);
       onShare?.("copy");
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // clipboard access denied — silently ignore
     }
   };
 
@@ -50,8 +50,8 @@ export default function ShareButtons({ url, onShare }: ShareButtonsProps) {
             await navigator.clipboard.writeText(instagramShareText);
             onShare?.("instagram");
             window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
-          } catch (error) {
-            console.error(error);
+          } catch {
+            // clipboard or window.open denied — silently ignore
           }
         }}
         className="rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-amber-400 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"

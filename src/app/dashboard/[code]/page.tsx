@@ -39,8 +39,7 @@ export default function DashboardPage({
         }
         const json = await res.json();
         setData(json);
-      } catch (error) {
-        console.error(error);
+      } catch {
         setFetchError(true);
       } finally {
         setLoading(false);
@@ -63,8 +62,8 @@ export default function DashboardPage({
           channel,
         }),
       });
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // share tracking is non-critical — silently ignore failures
     }
   };
 
@@ -109,9 +108,9 @@ export default function DashboardPage({
 
         <section className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
           <div className="rounded-3xl border border-amber-100 bg-white/90 p-6 shadow-sm">
-            <h2 className="text-xl font-bold">Share your link</h2>
+            <h2 className="text-xl font-bold">Move up the list</h2>
             <p className="mt-2 text-sm text-amber-700">
-              Every friend who joins bumps you closer to premium perks.
+              Each friend who joins through your link bumps you forward. 3 referrals = beta access. You&apos;re one share away.
             </p>
             <div className="mt-4 flex flex-col gap-4">
               <ReferralLink url={shareUrl} />
