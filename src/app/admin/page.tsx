@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface Stats {
@@ -45,6 +45,33 @@ export default function AdminDashboard() {
   const [chartData, setChartData] = useState<ChartData[]>([]);
   const [loading, setLoading] = useState(false);
   const [dataError, setDataError] = useState('');
+  const [checkingSession, setCheckingSession] = useState(true);
+
+  // Auto-restore admin session on page load (avoids forced re-login within 8h cookie window)
+  useEffect(() => {
+    fetch('/api/admin/me')
+      .then((res) => {
+        if (res.ok) {
+          setAuthenticated(true);
+          loadDashboardData();
+        }
+      })
+      .catch(() => {/* ignore — stays on login screen */})
+      .finally(() => setCheckingSession(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/auth', { method: 'DELETE' });
+    } catch {/* ignore network errors */}
+    setAuthenticated(false);
+    setStats(null);
+    setTopReferrers([]);
+    setRecentSignups([]);
+    setChartData([]);
+    setPassword('');
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,6 +144,14 @@ export default function AdminDashboard() {
     }
   };
 
+  if (checkingSession) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center p-4">
+        <div className="w-8 h-8 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center p-4">
@@ -160,12 +195,20 @@ export default function AdminDashboard() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-white">PsalMix Waitlist Dashboard</h1>
-          <button
-            onClick={handleExport}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition"
-          >
-            Export CSV
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleExport}
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition"
+            >
+              Export CSV
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-lg font-medium transition"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {loading && (

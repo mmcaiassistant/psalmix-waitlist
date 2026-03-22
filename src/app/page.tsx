@@ -72,7 +72,7 @@ function SignupForm({
       setResult({
         position: data.position,
         referralCode: data.referralCode,
-        message: data.already ? "You&apos;re already on the list!" : "You&apos;re in!",
+        message: data.already ? "You're already on the list!" : "You're in!",
       });
       setEmail("");
 

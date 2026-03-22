@@ -64,18 +64,21 @@ export async function POST(request: Request) {
 
     const position = (count ?? 0) + 1;
 
-    // Generate unique referral code
+    // Generate unique referral code — try up to 5 times; return 500 if all collide
     let newReferralCode = generateReferralCode();
-    let attempts = 0;
-    while (attempts < 5) {
+    let codeUnique = false;
+    for (let attempt = 0; attempt < 5; attempt += 1) {
       const { data: existingCode } = await supabase
         .from("waitlist_users")
         .select("id")
         .eq("referral_code", newReferralCode)
         .maybeSingle();
-      if (!existingCode) break;
+      if (!existingCode) { codeUnique = true; break; }
       newReferralCode = generateReferralCode();
-      attempts += 1;
+    }
+    if (!codeUnique) {
+      console.error("Referral code collision: all 5 attempts exhausted for", email);
+      return NextResponse.json({ error: "Server error — please try again" }, { status: 500 });
     }
 
     // Find referrer if referral code was provided

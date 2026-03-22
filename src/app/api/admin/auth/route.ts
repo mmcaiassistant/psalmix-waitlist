@@ -34,6 +34,14 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE() {
   const response = NextResponse.json({ ok: true });
-  response.cookies.delete(ADMIN_SESSION_COOKIE);
+  // Explicitly set path: "/" to match the Set-Cookie path, ensuring the browser
+  // actually clears the cookie rather than leaving it for the root path.
+  response.cookies.set(ADMIN_SESSION_COOKIE, "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
   return response;
 }
