@@ -2,7 +2,15 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon as CustomIconComponent } from "@/components/CustomIcon";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CustomIcon = CustomIconComponent as React.ComponentType<{ name: string; size?: number }>;
+import React from "react";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { ProblemSection } from "@/components/sections/ProblemSection";
+import { ComparisonSection } from "@/components/sections/ComparisonSection";
+import { GuaranteeSection } from "@/components/sections/GuaranteeSection";
+import { CTASection } from "@/components/sections/CTASection";
 
 /**
  * Psalmix Waitlist Landing Page
@@ -262,60 +270,13 @@ function HomeInner() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative pt-20 pb-24 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
-            {/* HERO: pill badge with more horizontal padding */}
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 text-primary border border-primary/20 mb-8">
-              <Icons.sparkles className="w-4 h-4" />
-              <span className="text-xs font-bold uppercase tracking-widest">Free Beta Starts April 15 — 500 spots only</span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-black leading-[1.1] mb-6 max-w-4xl mx-auto">
-              Family-Safe Music. <span className="text-primary">Finally.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-text-secondary mb-10 max-w-2xl mx-auto">
-              Every song human-verified. Every genre covered. So you can just&hellip; press play.
-            </p>
-            <SignupForm variant="hero" referralCode={referralCode} />
-
-            {/* Counter — only show when we have 50+ real signups */}
-            {displayCount !== null && displayCount >= 50 && (
-              <div className="mt-8 inline-flex items-center gap-3 px-6 py-3 rounded-full bg-surface/50 border border-primary/30 shadow-[0_0_20px_rgba(124,59,237,0.2)]">
-                <Icons.users className="w-5 h-5 text-primary" />
-                <span className="text-white font-bold">{displayCount.toLocaleString()} {displayCount === 1 ? "family" : "families"}</span>
-                <span className="text-text-secondary">already on the waitlist</span>
-              </div>
-            )}
-            {/* HERO: simplified fallback badge — no redundancy with top pill */}
-            {(displayCount === null || displayCount < 50) && (
-              <div className="mt-8 inline-flex items-center gap-3 px-6 py-3 rounded-full bg-surface/50 border border-primary/30">
-                <Icons.sparkles className="w-5 h-5 text-primary" />
-                <span className="text-white font-bold">Beta opens April 15 · First 500 families get founding perks</span>
-              </div>
-            )}
-
-            {/* Trust Badges */}
-            <div className="mt-8 flex flex-wrap justify-center items-center gap-6 md:gap-8 text-sm text-text-secondary">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                <span>iOS</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 2.226a.75.75 0 0 0-1.046 0l-3.796 3.97-1.927-2.014a.75.75 0 0 0-1.085 0l-6.87 7.18a.75.75 0 0 0 0 1.035l1.927 2.014L.93 18.382a.75.75 0 0 0 0 1.035l3.796 3.97a.75.75 0 0 0 1.085 0l3.796-3.97 1.927 2.014a.75.75 0 0 0 1.085 0l6.87-7.18a.75.75 0 0 0 0-1.035l-1.927-2.014 3.796-3.97a.75.75 0 0 0 0-1.035l-3.835-4.007z"/></svg>
-                <span>Android</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                <span>Web</span>
-              </div>
-              <div className="flex items-center gap-2 text-green-400">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <span>Secure</span>
-              </div>
-            </div>
-          </div>
-          <div className="absolute -top-20 -right-20 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]" />
-          <div className="absolute -bottom-20 -left-20 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
-        </section>
+        <HeroSection
+          displayCount={displayCount}
+          referralCode={referralCode}
+          SignupForm={SignupForm}
+          Icons={Icons}
+          CustomIcon={CustomIcon}
+        />
 
         {/* Founder Story — shown early for credibility */}
         <section className="py-20 bg-background-elevated relative overflow-hidden">
@@ -369,116 +330,10 @@ function HomeInner() {
         </section>
 
         {/* Problem Section */}
-        <section className="py-24 bg-background" id="problem">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-12">
-              <h2 className="text-4xl font-bold mb-4">Tired of Hovering Over Skip?</h2>
-              <p className="text-lg text-text-secondary">
-                Spotify&apos;s clean filter only catches labeled profanity. It doesn&apos;t catch the rest.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                { title: "Sexual themes and innuendo", sub: "Slips through 'clean' filters constantly — labeled versions still contain it." },
-                { title: "Drug glorification", sub: "Presented as normal and aspirational in songs your kids are requesting by name." },
-                { title: "Violence and dark imagery", sub: "Common in rap and pop — including songs explicitly marketed to teens." },
-                { title: "Explicit album art", sub: "Your child sees it the moment they tap on any playlist." },
-                { title: "Podcasts with adult content", sub: "The same app that plays music also surfaces adult podcasts — no separation." },
-                { title: 'Songs in "Kids" playlists that aren\'t for kids', sub: "Spotify's algorithm doesn't know your family's values." },
-              ].map((item) => (
-                <div key={item.title} className="flex items-start gap-4 bg-surface rounded-2xl p-6 border border-white/10 shadow-sm">
-                  {/* PROBLEM: proper inline SVG X icon */}
-                  <div className="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center flex-shrink-0">
-                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white">{item.title}</p>
-                    <p className="text-sm text-text-secondary">{item.sub}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mt-8 text-center text-text-secondary">
-              <strong>More than half of Billboard&apos;s top 100 songs contain content not safe for kids</strong> — and most of it slips right through Spotify&apos;s filter undetected. You deserve better.
-            </p>
-          </div>
-        </section>
+        <ProblemSection />
 
-        {/* Solution Section */}
-        <section className="py-24 bg-background-elevated" id="solution">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">Every Song. Verified Safe.</h2>
-              <p className="text-text-secondary max-w-2xl mx-auto">
-                Every song in Psalmix is an original track — created clean from the ground up, exclusive to our platform. No filters. No edited radio hits. Music made right the first time.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { title: "All Genres", body: "Original pop, hip-hop, country, rock & R&B — created clean, exclusive to Psalmix.", icon: "musicNote" },
-                { title: "Family Plan", body: "Up to 5 members, 3 simultaneous streams — one subscription for the whole family.", icon: "users" },
-                { title: "Zero Surprises", body: "No filtered mainstream hits. No clean radio edits. Music created safe from the very first note.", icon: "shield" },
-                { title: "Simple Pricing", body: "$7.99/mo or $59.99/year — less than half of Spotify Family", icon: "tag" },
-              ].map((feature) => (
-                <div key={feature.title} className="bg-primary/5 p-6 rounded-3xl border border-primary/10 text-center">
-                  {/* SOLUTION: icon containers w-16 h-16 rounded-2xl */}
-                  <div className="w-16 h-16 rounded-2xl bg-surface shadow-sm flex items-center justify-center mx-auto mb-5 overflow-hidden">
-                    {feature.icon === "musicNote" && <CustomIcon name="musicNote" size={32} />}
-                    {feature.icon === "users" && <Icons.users className="w-6 h-6 text-primary" />}
-                    {feature.icon === "shield" && <Icons.shieldCheck className="w-6 h-6 text-primary" />}
-                    {/* SOLUTION: tag icon replaced with inline SVG */}
-                    {feature.icon === "tag" && (
-                      <svg viewBox="0 0 24 24" className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.41 0l7.41-7.41a1 1 0 0 0 0-1.41z"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
-                    )}
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
-                  <p className="text-sm text-text-secondary">{feature.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Comparison Section */}
-        <section className="py-20 bg-background-elevated">
-          <div className="max-w-6xl mx-auto px-6">
-            <h2 className="text-4xl font-bold text-center mb-4">See the Difference</h2>
-            <p className="text-center text-text-secondary mb-10">Human-verified. Half the price. Complete peace of mind.</p>
-            <div className="overflow-x-auto rounded-3xl border border-white/10 bg-surface shadow-sm">
-              <table className="w-full min-w-[480px] text-left">
-                <thead className="bg-surface-hover">
-                  <tr className="text-sm uppercase tracking-wider text-text-secondary">
-                    <th className="p-4 md:p-6"> </th>
-                    <th className="p-4 md:p-6">Spotify Family</th>
-                    <th className="p-4 md:p-6 bg-primary/10 border-l border-primary/20">
-                      <span className="text-primary font-bold">Psalmix</span>
-                      {/* COMPARISON: removed animate-pulse from badge */}
-                      <span className="ml-2 text-sm bg-primary text-white px-3 py-1 rounded-full font-bold">✓ RECOMMENDED</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {[
-                    { label: "Price", spotify: "$19.99/mo", psalmix: "$7.99/mo", highlight: true },
-                    { label: "Content Safety", spotify: "Labels only", psalmix: "Human-verified", highlight: false },
-                    { label: "Content Library", spotify: "Mainstream (filtered)", psalmix: "Original, exclusive tracks", highlight: false },
-                    { label: "Parental Dashboard", spotify: "No", psalmix: "Yes", highlight: false },
-                    { label: "Human Review", spotify: "No", psalmix: "Every song & cover image", highlight: false },
-                  ].map((row) => (
-                    <tr key={row.label}>
-                      <td className="p-4 md:p-6 font-semibold text-white">{row.label}</td>
-                      <td className={`p-4 md:p-6 text-text-secondary ${row.highlight ? "line-through opacity-60" : ""}`}>{row.spotify}</td>
-                      <td className={`p-4 md:p-6 bg-primary/5 border-l border-primary/20 ${row.highlight ? "text-2xl font-black text-primary" : "font-semibold text-primary"}`}>
-                        {row.psalmix}
-                        {row.highlight && <span className="ml-2 text-sm font-normal text-green-400">Save $12/mo!</span>}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
+        {/* Solution + Comparison Sections */}
+        <ComparisonSection Icons={Icons} CustomIcon={CustomIcon} />
 
         {/* Founding Families Section */}
         <section className="py-20 bg-background-elevated" id="founding">
@@ -564,23 +419,7 @@ function HomeInner() {
         </section>
 
         {/* Guarantee Section */}
-        <section className="py-16 bg-background-elevated">
-          <div className="max-w-3xl mx-auto px-6">
-            {/* GUARANTEE: purple tones, 30-day post-launch guarantee */}
-            <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-3xl p-8 md:p-12 border border-primary/20 text-center">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
-                <Icons.shieldCheck className="w-8 h-8 text-primary" />
-              </div>
-              <h2 className="text-3xl font-bold mb-4">30-Day Love It Guarantee</h2>
-              <p className="text-xl text-text-secondary mb-6">
-                After beta, if Psalmix isn&apos;t everything we promised in your first 30 days — you get a <span className="text-primary font-semibold">full refund</span>. No questions. No games.
-              </p>
-              <p className="text-sm text-text-secondary">
-                We&apos;re building this for the long run. If it doesn&apos;t deliver, you shouldn&apos;t pay for it. Simple as that.
-              </p>
-            </div>
-          </div>
-        </section>
+        <GuaranteeSection />
 
         {/* FAQ Section */}
         <section className="py-24 bg-background" id="faq">
@@ -626,16 +465,11 @@ function HomeInner() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 bg-primary text-white overflow-hidden relative">
-          <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
-            <h2 className="text-4xl md:text-5xl font-black mb-6">Ready to Just Press Play?</h2>
-            <p className="text-white/80 mb-10 max-w-xl mx-auto text-lg">
-              Beta opens April 15. Reserve your spot now — it&apos;s free.
-            </p>
-            <SignupForm variant="footer" referralCode={referralCode} />
-            <p className="mt-6 text-sm text-white/80">🎉 Beta is FREE • $7.99/mo at launch • No credit card required</p>
-          </div>
-        </section>
+        <CTASection
+          referralCode={referralCode}
+          spotsRemaining={spotsRemaining}
+          SignupForm={SignupForm}
+        />
       </main>
 
       {/* Footer */}
