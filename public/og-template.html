@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1200px;
+      height: 630px;
+      background: linear-gradient(135deg, #111826 0%, #1C2333 50%, #251b36 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding: 60px;
+    }
+    .badge {
+      background: rgba(139, 75, 207, 0.2);
+      border: 1px solid rgba(139, 75, 207, 0.4);
+      color: #A66BD9;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-size: 72px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    h1 span {
+      color: #8B4BCF;
+      font-style: italic;
+    }
+    p {
+      font-size: 28px;
+      color: #94A3B8;
+      text-align: center;
+      max-width: 800px;
+    }
+    .cta {
+      margin-top: 40px;
+      background: #8B4BCF;
+      color: white;
+      padding: 20px 50px;
+      border-radius: 16px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: #8B4BCF;
+      filter: blur(150px);
+      opacity: 0.3;
+      border-radius: 50%;
+    }
+    .glow-1 { top: -100px; right: -100px; }
+    .glow-2 { bottom: -100px; left: -100px; opacity: 0.2; }
+  </style>
+</head>
+<body>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="badge">✨ First 500 Families: 50% Off Forever</div>
+  <h1>Family-Safe Music.<br><span>Finally.</span></h1>
+  <p>Every song verified safe by real humans. Half the price of Spotify.</p>
+  <div class="cta">Join the Waitlist →</div>
+</body>
+</html>

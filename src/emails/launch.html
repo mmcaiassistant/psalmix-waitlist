@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 {{name}}, PsalMix is LIVE!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 60px 30px;
+      text-align: center;
+      position: relative;
+    }
+    .header-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      margin: 0;
+      color: #ffffff;
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .header p {
+      margin: 15px 0 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 18px;
+    }
+    .content {
+      padding: 40px 30px;
+    }
+    .launch-message {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-radius: 12px;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    .launch-message h2 {
+      margin: 0 0 15px 0;
+      color: #78350f;
+      font-size: 24px;
+    }
+    .launch-message p {
+      margin: 0;
+      color: #92400e;
+      line-height: 1.6;
+    }
+    .download-section {
+      margin: 40px 0;
+      text-align: center;
+    }
+    .download-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin: 25px 0;
+      flex-wrap: wrap;
+    }
+    .download-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #000000;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+    .download-button:hover {
+      transform: scale(1.05);
+    }
+    .store-icon {
+      font-size: 28px;
+    }
+    .rewards-summary {
+      background: #f0fdf4;
+      border: 2px solid #10b981;
+      border-radius: 12px;
+      padding: 25px;
+      margin: 30px 0;
+    }
+    .rewards-title {
+      text-align: center;
+      color: #065f46;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+    }
+    .reward-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #d1fae5;
+    }
+    .reward-item:last-child {
+      border-bottom: none;
+    }
+    .reward-check {
+      color: #10b981;
+      font-size: 24px;
+      margin-right: 15px;
+    }
+    .reward-text {
+      color: #065f46;
+      font-weight: 600;
+      flex: 1;
+    }
+    .thank-you-box {
+      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+      border-radius: 12px;
+      padding: 30px;
+      margin: 40px 0;
+      text-align: center;
+    }
+    .thank-you-box h3 {
+      margin: 0 0 15px 0;
+      color: #3730a3;
+      font-size: 24px;
+    }
+    .thank-you-box p {
+      margin: 0;
+      color: #4338ca;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    .footer {
+      background: #f7fafc;
+      padding: 30px;
+      text-align: center;
+      color: #718096;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-icon">🎊</div>
+      <h1>PsalMix is LIVE!</h1>
+      <p>Your wait is over, {{name}}</p>
+    </div>
+    
+    <div class="content">
+      <p style="font-size: 18px; color: #2d3748; margin: 0 0 20px 0;">
+        The moment you've been waiting for is here! 🎉
+      </p>
+      
+      <p style="color: #4a5568; line-height: 1.6;">
+        PsalMix is officially launched and ready for you to download. Thanks to your early support and referrals, you're among the first to experience a new way to worship through music.
+      </p>
+      
+      <div class="launch-message">
+        <h2>Download Now & Start Worshipping</h2>
+        <p>
+          Your account is ready, and all your earned rewards have been applied. Just download the app and sign in with your email!
+        </p>
+      </div>
+      
+      <div class="download-section">
+        <h3 style="color: #2d3748; margin: 0 0 20px 0;">Get PsalMix</h3>
+        
+        <div class="download-buttons">
+          <a href="{{app_store_link}}" class="download-button">
+            <span class="store-icon">🍎</span>
+            <div>
+              <div style="font-size: 10px; opacity: 0.8;">Download on the</div>
+              <div>App Store</div>
+            </div>
+          </a>
+          
+          <a href="{{play_store_link}}" class="download-button">
+            <span class="store-icon">📱</span>
+            <div>
+              <div style="font-size: 10px; opacity: 0.8;">Get it on</div>
+              <div>Google Play</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <div class="rewards-summary">
+        <h3 class="rewards-title">🎁 Your Rewards Are Active!</h3>
+        {{rewards_summary}}
+      </div>
+      
+      <div style="background: #f7fafc; border-radius: 12px; padding: 25px; margin: 30px 0;">
+        <h4 style="margin: 0 0 15px 0; color: #2d3748;">What's Inside PsalMix?</h4>
+        <ul style="margin: 0; padding-left: 20px; color: #4a5568; line-height: 2;">
+          <li>Curated worship playlists</li>
+          <li>Lyric videos with beautiful visuals</li>
+          <li>Personal devotional journal</li>
+          <li>Offline listening mode</li>
+          <li>Community prayer wall</li>
+          <li>Daily worship challenges</li>
+        </ul>
+      </div>
+      
+      <div class="thank-you-box">
+        <h3>Thank You for Being Part of Our Journey! 🙏</h3>
+        <p>
+          Your support during our waitlist period means the world to us. You're not just a user – you're part of the PsalMix family. We can't wait to see how God uses this app in your worship journey!
+        </p>
+      </div>
+      
+      <p style="color: #718096; font-size: 14px; text-align: center; margin: 40px 0 0 0;">
+        Need help getting started? Visit our <a href="#" style="color: #667eea;">Help Center</a> or reach out to <a href="mailto:support@psalmix.app" style="color: #667eea;">support@psalmix.app</a>
+      </p>
+    </div>
+    
+    <div class="footer">
+      <p style="margin: 0; font-weight: 600;">PsalMix - A New Way to Worship</p>
+      <p style="margin: 15px 0 0 0; font-size: 12px;">
+        You're receiving this because you joined our waitlist.
+      </p>
+      <p style="margin: 10px 0 0 0; font-size: 12px;">
+        <a href="#" style="color: #718096;">Unsubscribe</a> | 
+        <a href="#" style="color: #718096;">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
