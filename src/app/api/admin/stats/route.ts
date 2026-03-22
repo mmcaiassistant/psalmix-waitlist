@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       supabase.from(TABLE).select("id", { count: "exact", head: true }).gte("created_at", todayStart.toISOString()),
       supabase.from(TABLE).select("id", { count: "exact", head: true }).gte("created_at", weekStart.toISOString()),
       supabase.from(TABLE).select("id", { count: "exact", head: true }).gte("created_at", monthStart.toISOString()),
-      supabase.from(TABLE).select("id, email, referral_count, position").order("referral_count", { ascending: false }).limit(10),
+      supabase.from(TABLE).select("id, email, first_name, referral_count, position").order("referral_count", { ascending: false }).limit(10),
       supabase.from(TABLE).select("created_at").gte("created_at", new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString()).order("created_at", { ascending: true }),
     ]);
 

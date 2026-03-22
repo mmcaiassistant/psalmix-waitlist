@@ -17,7 +17,7 @@ export async function GET(
   try {
     const { data: user, error } = await supabase
       .from(WAITLIST_TABLE)
-      .select("*")
+      .select("id, email, referral_code, referral_count, position")
       .eq("referral_code", code)
       .maybeSingle();
 

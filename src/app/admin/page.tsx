@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface Stats {
@@ -11,19 +11,23 @@ interface Stats {
 }
 
 interface TopReferrer {
+  id: string;
   email: string;
-  name: string;
-  referralCount: number;
+  first_name: string | null;
+  referral_count: number;
   position: number;
 }
 
 interface Signup {
   id: string;
   email: string;
-  name: string;
-  createdAt: string;
-  referredBy: string | null;
+  first_name: string | null;
+  created_at: string;
+  referred_by: string | null;
+  referredByEmail: string | null;
   position: number;
+  referral_code: string;
+  referral_count: number;
 }
 
 interface ChartData {
@@ -40,6 +44,7 @@ export default function AdminDashboard() {
   const [recentSignups, setRecentSignups] = useState<Signup[]>([]);
   const [chartData, setChartData] = useState<ChartData[]>([]);
   const [loading, setLoading] = useState(false);
+  const [dataError, setDataError] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,20 +68,28 @@ export default function AdminDashboard() {
 
   const loadDashboardData = async () => {
     setLoading(true);
+    setDataError('');
     try {
-      // Load stats
-      const statsRes = await fetch('/api/admin/stats');
-      const statsData = await statsRes.json();
-      setStats(statsData.stats);
-      setTopReferrers(statsData.topReferrers);
-      setChartData(statsData.chartData);
+      const [statsRes, usersRes] = await Promise.all([
+        fetch('/api/admin/stats'),
+        fetch('/api/admin/users?limit=20'),
+      ]);
 
-      // Load recent signups
-      const usersRes = await fetch('/api/admin/users?limit=20');
+      if (!statsRes.ok || !usersRes.ok) {
+        setDataError('Failed to load dashboard data — please refresh');
+        return;
+      }
+
+      const statsData = await statsRes.json();
       const usersData = await usersRes.json();
-      setRecentSignups(usersData.users);
+
+      setStats(statsData.stats);
+      setTopReferrers(statsData.topReferrers ?? []);
+      setChartData(statsData.chartData ?? []);
+      setRecentSignups(usersData.users ?? []);
     } catch (err) {
       console.error('Failed to load dashboard data:', err);
+      setDataError('Unexpected error loading data — check console');
     } finally {
       setLoading(false);
     }
@@ -85,6 +98,10 @@ export default function AdminDashboard() {
   const handleExport = async () => {
     try {
       const res = await fetch('/api/admin/export');
+      if (!res.ok) {
+        alert('Export failed — please try again');
+        return;
+      }
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -96,6 +113,7 @@ export default function AdminDashboard() {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error('Export failed:', err);
+      alert('Export failed — please try again');
     }
   };
 
@@ -154,6 +172,12 @@ export default function AdminDashboard() {
           <div className="text-center text-white mb-8">Loading...</div>
         )}
 
+        {dataError && (
+          <div className="bg-red-900/50 border border-red-500 text-red-300 rounded-lg p-4 mb-8">
+            {dataError}
+          </div>
+        )}
+
         {/* Stats Cards */}
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
@@ -177,23 +201,29 @@ export default function AdminDashboard() {
           {/* Top Referrers */}
           <div className="bg-gray-800 rounded-lg p-6">
             <h2 className="text-xl font-bold text-white mb-4">Top Referrers</h2>
-            <div className="space-y-3">
-              {topReferrers.map((referrer, idx) => (
-                <div key={referrer.email} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl font-bold text-purple-400">#{idx + 1}</span>
-                    <div>
-                      <p className="text-white font-medium">{referrer.name}</p>
-                      <p className="text-gray-400 text-sm">{referrer.email}</p>
+            {topReferrers.length === 0 ? (
+              <p className="text-gray-400">No referrals yet</p>
+            ) : (
+              <div className="space-y-3">
+                {topReferrers.map((referrer, idx) => (
+                  <div key={referrer.id} className="flex items-center justify-between bg-gray-700 p-3 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl font-bold text-purple-400">#{idx + 1}</span>
+                      <div>
+                        {referrer.first_name && (
+                          <p className="text-white font-medium">{referrer.first_name}</p>
+                        )}
+                        <p className="text-gray-400 text-sm">{referrer.email}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-white font-bold">{referrer.referral_count}</p>
+                      <p className="text-gray-400 text-sm">referrals</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-white font-bold">{referrer.referralCount}</p>
-                    <p className="text-gray-400 text-sm">referrals</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -216,17 +246,20 @@ export default function AdminDashboard() {
                   <tr key={signup.id} className="border-b border-gray-700 hover:bg-gray-700/50">
                     <td className="py-3 px-4 text-white font-bold">#{signup.position}</td>
                     <td className="py-3 px-4 text-gray-300">{signup.email}</td>
-                    <td className="py-3 px-4 text-gray-300">{signup.name}</td>
+                    <td className="py-3 px-4 text-gray-300">{signup.first_name ?? '—'}</td>
                     <td className="py-3 px-4 text-gray-400 text-sm">
-                      {new Date(signup.createdAt).toLocaleDateString()}
+                      {new Date(signup.created_at).toLocaleDateString()}
                     </td>
                     <td className="py-3 px-4 text-gray-400 text-sm">
-                      {signup.referredBy || '-'}
+                      {signup.referredByEmail ?? signup.referred_by ?? '—'}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            {recentSignups.length === 0 && !loading && (
+              <p className="text-gray-400 text-center py-8">No signups yet</p>
+            )}
           </div>
         </div>
       </div>
@@ -252,7 +285,7 @@ function SimpleBarChart({ data }: { data: ChartData[] }) {
     return <div className="text-gray-400 text-center">No data available</div>;
   }
 
-  const maxCount = Math.max(...data.map(d => d.count));
+  const maxCount = Math.max(...data.map((d) => d.count), 1); // avoid divide-by-zero
 
   return (
     <div className="flex items-end justify-between h-full gap-2">
@@ -260,7 +293,10 @@ function SimpleBarChart({ data }: { data: ChartData[] }) {
         <div key={item.date} className="flex-1 flex flex-col items-center gap-2">
           <div
             className="w-full bg-purple-600 rounded-t"
-            style={{ height: `${(item.count / maxCount) * 100}%`, minHeight: item.count > 0 ? '4px' : '0' }}
+            style={{
+              height: `${(item.count / maxCount) * 100}%`,
+              minHeight: item.count > 0 ? '4px' : '0',
+            }}
           />
           <div className="text-xs text-gray-400 rotate-45 origin-top-left mt-4">
             {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}

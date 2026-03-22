@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
 
     const { data: users, error } = await supabase
       .from(TABLE)
-      .select("id, email, position, referral_code, referral_count, referred_by, created_at")
+      .select("id, email, first_name, position, referral_code, referral_count, referred_by, created_at")
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
 
@@ -44,7 +44,6 @@ export async function GET(request: NextRequest) {
     const enriched = (users || []).map((u) => ({
       ...u,
       referredByEmail: u.referred_by ? referrerMap[u.referred_by] ?? null : null,
-      name: null, // firstName not stored in DB — surfaced for visibility
     }));
 
     return NextResponse.json({
