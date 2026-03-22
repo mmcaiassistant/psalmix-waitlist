@@ -318,36 +318,52 @@ function HomeInner() {
         </section>
 
         {/* Founder Story — shown early for credibility */}
-        <section className="py-16 bg-background-elevated">
-          <div className="max-w-4xl mx-auto px-6">
-            <div className="bg-surface rounded-3xl p-8 md:p-12 border border-primary/20 shadow-sm relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-              <div className="relative z-10 flex flex-col md:flex-row gap-10 items-center">
-                <div className="flex-shrink-0 flex flex-col items-center gap-3">
-                  <img src="/images/mckinzie-headshot.jpg" alt="McKinzie Bean" className="w-56 h-56 rounded-2xl object-cover shadow-xl" />
-                  <p className="text-sm font-bold text-white text-center">McKinzie Bean</p>
-                  <p className="text-xs text-text-secondary text-center">Founder, singer/songwriter &amp; mom of 3</p>
+        <section className="py-20 bg-background-elevated relative overflow-hidden">
+          {/* ambient glow */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[120px]" />
+          </div>
+          <div className="max-w-5xl mx-auto px-6 relative z-10">
+            <div className="flex flex-col md:flex-row gap-14 items-center">
+
+              {/* Photo column */}
+              <div className="flex-shrink-0 flex flex-col items-center gap-4">
+                {/* gradient ring */}
+                <div className="p-[3px] rounded-full bg-gradient-to-br from-primary via-accent to-cyan-400 shadow-[0_0_40px_rgba(139,75,207,0.4)]">
+                  <img
+                    src="/images/mckinzie-headshot.jpg"
+                    alt="McKinzie Bean"
+                    className="w-48 h-48 rounded-full object-cover object-top"
+                  />
                 </div>
-                <div>
-                  {/* FOUNDER STORY: trimmed to 2 paragraphs */}
-                  <p className="text-white text-lg leading-relaxed mb-4">
-                    &ldquo;The turning point was realizing I couldn&apos;t keep reacting. I&apos;d hear something on the radio or catch a lyric on Spotify and think — how long has my kid been singing along to that?
-                  </p>
-                  <p className="text-white text-lg leading-relaxed mb-4">
-                    I&apos;m a singer and songwriter — I know how deeply music shapes the way we see the world. As a homeschool mom juggling a preteen, an elementary-aged child, and a toddler, I couldn&apos;t keep reacting. So I built the thing I couldn&apos;t find anywhere else: music my kids actually love, with zero surprises. That&apos;s Psalmix.&rdquo;
-                  </p>
-                  <p className="text-white/70 text-sm leading-relaxed">
-                    Every song and every cover image is reviewed by McKinzie and our team of Christian musicians and educators before it ever reaches your family. Not an algorithm — real people who care.
-                  </p>
-                  <div className="mt-6 pt-6 border-t border-white/10">
-                    {/* FOUNDER STORY: removed "Built for families like yours" chip */}
-                    <div className="flex flex-wrap gap-3">
-                      <span className="px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">Singer &amp; songwriter</span>
-                      <span className="px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">Homeschool mom of 3</span>
-                    </div>
-                  </div>
+                <div className="text-center">
+                  <p className="font-bold text-white text-base">McKinzie Bean</p>
+                  <p className="text-xs text-text-secondary mt-0.5">Founder · Singer/songwriter · Mom of 3</p>
+                </div>
+                <div className="flex flex-wrap justify-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-primary/15 border border-primary/25 text-primary text-xs font-semibold">🎵 Singer &amp; songwriter</span>
+                  <span className="px-3 py-1 rounded-full bg-primary/15 border border-primary/25 text-primary text-xs font-semibold">👨‍👩‍👧 Homeschool mom of 3</span>
                 </div>
               </div>
+
+              {/* Quote column */}
+              <div className="flex-1">
+                {/* big decorative quote mark */}
+                <div className="text-[96px] leading-none font-serif text-primary/25 select-none mb-[-24px]">&ldquo;</div>
+                <blockquote className="text-white text-xl leading-relaxed font-medium mb-5">
+                  The turning point was realizing I couldn&apos;t keep reacting. I&apos;d hear something on the radio or catch a lyric on Spotify and think — how long has my kid been singing along to that?
+                </blockquote>
+                <p className="text-white/80 text-base leading-relaxed mb-6">
+                  I&apos;m a singer and songwriter — I know how deeply music shapes the way we see the world. As a homeschool mom juggling a preteen, an elementary-aged child, and a toddler, I couldn&apos;t keep reacting. So I built the thing I couldn&apos;t find anywhere else: music my kids actually love, with zero surprises. That&apos;s Psalmix.
+                </p>
+                <div className="flex items-start gap-3 bg-primary/8 border border-primary/20 rounded-2xl px-5 py-4">
+                  <svg className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <p className="text-white/70 text-sm leading-relaxed">
+                    Every song and cover image is reviewed by McKinzie and our team of Christian musicians and educators before it reaches your family. Not an algorithm — real people who care.
+                  </p>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
