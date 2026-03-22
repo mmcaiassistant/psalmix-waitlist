@@ -21,7 +21,15 @@ export async function GET(
       .eq("referral_code", code)
       .maybeSingle();
 
-    if (error || !user) {
+    if (error) {
+      console.error("DB error in /api/user/[code]:", error);
+      return NextResponse.json(
+        { error: "Server error" },
+        { status: 500 }
+      );
+    }
+
+    if (!user) {
       return NextResponse.json(
         { error: "User not found" },
         { status: 404 }

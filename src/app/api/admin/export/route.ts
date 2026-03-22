@@ -17,12 +17,25 @@ export async function GET(request: NextRequest) {
   try {
     const { data: users, error } = await supabase
       .from(TABLE)
-      .select("position, email, referral_code, referral_count, referred_by, created_at")
+      .select("position, email, first_name, referral_code, referral_count, referred_by, created_at")
       .order("position", { ascending: true });
 
     if (error) throw error;
 
-    const headers = ["Position", "Email", "Referral Code", "Referral Count", "Referred By (ID)", "Joined At"];
+    // Resolve referred_by UUIDs → emails in one batch query
+    const referrerIds = Array.from(
+      new Set((users || []).map((u) => u.referred_by).filter(Boolean) as string[])
+    );
+    let referrerMap: Record<string, string> = {};
+    if (referrerIds.length > 0) {
+      const { data: referrers } = await supabase
+        .from(TABLE)
+        .select("id, email")
+        .in("id", referrerIds);
+      referrers?.forEach((r) => { referrerMap[r.id] = r.email; });
+    }
+
+    const headers = ["Position", "Email", "First Name", "Referral Code", "Referral Count", "Referred By (Email)", "Joined At"];
     const escape = (cell: unknown) => {
       const s = String(cell ?? "");
       return s.includes(",") || s.includes('"') || s.includes("\n") ? `"${s.replace(/"/g, '""')}"` : s;
@@ -30,9 +43,10 @@ export async function GET(request: NextRequest) {
     const rows = (users || []).map((u) => [
       u.position,
       u.email,
+      u.first_name ?? "",
       u.referral_code,
       u.referral_count ?? 0,
-      u.referred_by ?? "",
+      u.referred_by ? (referrerMap[u.referred_by] ?? u.referred_by) : "",
       u.created_at ? new Date(u.created_at).toISOString() : "",
     ].map(escape).join(","));
 

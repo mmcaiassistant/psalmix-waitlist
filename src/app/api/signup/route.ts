@@ -128,18 +128,24 @@ export async function POST(request: Request) {
 
     // Handle referral tracking
     if (referredById && referrerEmail) {
-      // Add referral record
-      await supabase.from("referrals").insert({
+      // Add referral record — log but don't fail signup if this errors
+      const { error: referralInsertError } = await supabase.from("referrals").insert({
         referrer_id: referredById,
         referee_id: createdUser.id,
       });
+      if (referralInsertError) {
+        console.error("Failed to insert referral record:", referralInsertError);
+      }
 
       // Atomic increment — no race condition
-      const { data: updatedReferrer } = await supabase.rpc("increment_referral_count", {
+      const { data: updatedReferrer, error: rpcError } = await supabase.rpc("increment_referral_count", {
         user_id: referredById,
       });
+      if (rpcError) {
+        console.error("increment_referral_count RPC failed:", rpcError);
+      }
 
-      const nextCount = updatedReferrer ?? 1;
+      const nextCount = typeof updatedReferrer === "number" ? updatedReferrer : 1;
 
       // Update referrer's count in FlowDesk (triggers milestone emails)
       try {

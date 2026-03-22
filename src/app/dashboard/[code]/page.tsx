@@ -22,6 +22,7 @@ export default function DashboardPage({
 }) {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
   const [origin, setOrigin] = useState("");
 
   useEffect(() => {
@@ -32,11 +33,15 @@ export default function DashboardPage({
     const fetchStats = async () => {
       try {
         const res = await fetch(`/api/user/${params.code}`);
-        if (!res.ok) throw new Error("Failed to fetch stats");
+        if (!res.ok) {
+          setFetchError(true);
+          return;
+        }
         const json = await res.json();
         setData(json);
       } catch (error) {
         console.error(error);
+        setFetchError(true);
       } finally {
         setLoading(false);
       }
@@ -80,6 +85,14 @@ export default function DashboardPage({
 
         {loading ? (
           <p className="text-sm text-amber-700">Loading your dashboard…</p>
+        ) : fetchError ? (
+          <div className="rounded-2xl bg-rose-50 border border-rose-200 p-6 text-center text-rose-700">
+            <p className="font-semibold">Could not load your dashboard.</p>
+            <p className="text-sm mt-1">
+              The link may be invalid, or there was a server error. Please try again or re-join at{" "}
+              <a href="/" className="underline">psalmix.com</a>.
+            </p>
+          </div>
         ) : (
           <section className="grid gap-4 sm:grid-cols-3">
             <PositionDisplay label="Current position" value={data?.position ?? 0} prefix="#" />
