@@ -322,10 +322,10 @@ function HomeInner() {
           <div className="max-w-4xl mx-auto px-6">
             <div className="bg-surface rounded-3xl p-8 md:p-12 border border-primary/20 shadow-sm relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-              <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start">
-                <div className="flex-shrink-0 flex flex-col items-center gap-2">
-                  <img src="/images/mckinzie-headshot.jpg" alt="McKinzie Bean" className="w-20 h-20 rounded-full object-cover shadow-lg" />
-                  <p className="text-sm font-bold text-white text-center">McKinzie</p>
+              <div className="relative z-10 flex flex-col md:flex-row gap-10 items-center">
+                <div className="flex-shrink-0 flex flex-col items-center gap-3">
+                  <img src="/images/mckinzie-headshot.jpg" alt="McKinzie Bean" className="w-56 h-56 rounded-2xl object-cover shadow-xl" />
+                  <p className="text-sm font-bold text-white text-center">McKinzie Bean</p>
                   <p className="text-xs text-text-secondary text-center">Founder, singer/songwriter &amp; mom of 3</p>
                 </div>
                 <div>
@@ -543,49 +543,6 @@ function HomeInner() {
                 </div>
               </div>
               <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ background: "radial-gradient(circle at 70% 30%, #7c3aed 0%, transparent 50%)" }} />
-            </div>
-          </div>
-        </section>
-
-        {/* Referral Section */}
-        <section className="py-24 bg-background" id="referrals">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4">Share Psalmix, Get Rewarded</h2>
-              <p className="text-text-secondary">Tell a friend about Psalmix. They&apos;ll thank you — and so will we.</p>
-            </div>
-            <div className="grid lg:grid-cols-[1.3fr_1fr] gap-8 items-start">
-              <div className="rounded-3xl border border-white/10 bg-surface p-8 shadow-sm">
-                {/* REFERRAL: extra line above tier grid */}
-                <p className="text-sm text-text-secondary mb-4">The more friends you invite, the better the perks — for both of you.</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                  <div className="rounded-2xl border border-primary/20 bg-primary/5 p-4">
-                    <p className="font-bold text-primary">Each referral</p>
-                    {/* REFERRAL: updated subtext */}
-                    <p className="text-text-secondary">Move up the line — and your friend does too</p>
-                  </div>
-                  {[3, 10, 25, 50].map((tier) => (
-                    <div key={tier} className={`rounded-2xl p-4 ${tier === 50 ? "border border-primary/30 bg-primary/5" : "border border-white/10"}`}>
-                      <p className="text-xs uppercase tracking-wider text-text-secondary">{tier} referrals</p>
-                      <p className="font-semibold text-white">
-                        {tier === 3 && "Beta access (before launch)"}
-                        {tier === 10 && "Founding Family status"}
-                        {tier === 25 && "Golden Ticket to give away"}
-                        {tier === 50 && "Lifetime FREE subscription"}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-3xl border border-white/10 bg-surface p-8 shadow-sm">
-                <h3 className="text-xl font-bold mb-3">Ready to share?</h3>
-                <p className="text-sm text-text-secondary mb-6">Join the waitlist to get your personal referral link.</p>
-                <a href="#signup" className="inline-flex items-center justify-center w-full rounded-xl bg-primary px-6 py-3 font-semibold text-white hover:bg-primary/90">
-                  Get my referral link
-                </a>
-                {/* REFERRAL: updated "you both move up the waitlist" */}
-                <p className="mt-4 text-xs text-text-secondary">Share your link — you both move up the waitlist</p>
-              </div>
             </div>
           </div>
         </section>
