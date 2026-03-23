@@ -302,8 +302,8 @@ function HomeInner() {
                   <p className="text-xs text-text-secondary mt-0.5">Founder · Singer/songwriter · Mom of 3</p>
                 </div>
                 <div className="flex flex-wrap justify-center gap-2">
-                  <span className="px-3 py-1 rounded-full bg-primary/15 border border-primary/25 text-primary text-xs font-semibold">🎵 Singer &amp; songwriter</span>
-                  <span className="px-3 py-1 rounded-full bg-primary/15 border border-primary/25 text-primary text-xs font-semibold">👨‍👩‍👧 Homeschool mom of 3</span>
+                  <span className="px-3 py-1 rounded-full bg-primary/15 border border-primary/25 text-primary text-xs font-semibold"> Singer & songwriter</span>
+                  <span className="px-3 py-1 rounded-full bg-primary/15 border border-primary/25 text-primary text-xs font-semibold">‍‍ Homeschool mom of 3</span>
                 </div>
               </div>
 
@@ -343,7 +343,7 @@ function HomeInner() {
                 <div>
                   <h2 className="text-4xl font-bold mb-6">Be a Founding Family</h2>
                   <p className="text-slate-300 mb-4 text-lg">
-                    <strong className="text-primary text-xl">Beta is FREE 🎉</strong> — no credit card, no risk.
+                    <strong className="text-primary text-xl">Beta is FREE</strong> — no credit card, no risk.
                   </p>
                   <p className="text-slate-300 mb-8">
                     Beta opens <strong className="text-white">April 15</strong> — and we&apos;re saving the first 500 spots for families who get in early. Founding members lock in the launch rate forever — no price increases, ever.
@@ -368,7 +368,7 @@ function HomeInner() {
                           <span>500 Founding Spots Available</span>
                           <span>First come, first served</span>
                         </div>
-                        <p className="text-sm text-slate-400 mt-2">Be one of the very first founding families. 🎉</p>
+                        <p className="text-sm text-slate-400 mt-2">Be one of the very first founding families.</p>
                       </>
                     )}
                   </div>
@@ -394,7 +394,7 @@ function HomeInner() {
                 {/* FOUNDING FAMILIES: replaced right card */}
                 <div className="bg-surface/5 backdrop-blur-md rounded-2xl p-8 border border-primary/30 text-center">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-bold uppercase tracking-widest mb-6">
-                    ✦ Founding Family Status
+                    Founding Family Status
                   </div>
                   <h3 className="text-2xl font-bold mb-2">What you&apos;re locking in</h3>
                   <p className="text-slate-400 text-sm mb-6">Reserved for the first 500 families only.</p>
@@ -482,7 +482,7 @@ function HomeInner() {
             <div>
               {/* FOOTER: fixed "Psalmix" → "Psalmix" */}
               <h2 className="text-lg font-bold tracking-tight">Psalmix</h2>
-              <p className="text-xs text-text-secondary">Built by McKinzie Bean · Mom of 3 · Singer &amp; songwriter</p>
+              <p className="text-xs text-text-secondary">Built by McKinzie Bean · Mom of 3 · Singer & songwriter</p>
             </div>
           </div>
           <div className="flex gap-8 text-sm font-medium text-text-secondary">

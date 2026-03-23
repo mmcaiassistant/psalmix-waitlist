@@ -58,7 +58,7 @@ export function ComparisonSection({ Icons, CustomIcon }: ComparisonSectionProps)
             {/* Zero Surprises — featured */}
             <div className="bg-surface border border-primary/30 rounded-2xl p-8 flex flex-col shadow-[0_0_30px_rgba(124,59,237,0.15)]">
               <div className="text-xs font-bold text-primary uppercase tracking-widest mb-4">
-                ⭐ Key Differentiator
+                Key Differentiator
               </div>
               <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
                 <Icons.shieldCheck className="w-8 h-8 text-primary" />
@@ -118,7 +118,7 @@ export function ComparisonSection({ Icons, CustomIcon }: ComparisonSectionProps)
                   <th className="py-5 px-6 text-center bg-primary/20 border-l-2 border-primary">
                     <div className="text-xl font-black text-primary">Psalmix</div>
                     <div className="mt-1 inline-flex items-center px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-bold tracking-wide">
-                      🏆 BEST FOR FAMILIES
+                      BEST FOR FAMILIES
                     </div>
                   </th>
                 </tr>

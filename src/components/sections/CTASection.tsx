@@ -48,7 +48,7 @@ export function CTASection({ referralCode, spotsRemaining, SignupForm }: CTASect
             )}
 
             <p className="text-xs text-white/40">
-              🎉 Free during beta · $7.99/mo at launch · No credit card required
+              Free during beta · $7.99/mo at launch · No credit card required
             </p>
           </div>
         </div>
