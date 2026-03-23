@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface ComparisonSectionProps {
   Icons: {
@@ -19,7 +20,7 @@ const comparisonRows = [
 export function ComparisonSection({ Icons, CustomIcon }: ComparisonSectionProps) {
   return (
     <>
-      {/* ── Solution / Feature Cards ── */}
+      {/* ── Bento Feature Grid ── */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
@@ -31,23 +32,54 @@ export function ComparisonSection({ Icons, CustomIcon }: ComparisonSectionProps)
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Bento grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-            {/* All Genres */}
-            <div className="bg-surface border border-white/10 rounded-2xl p-8 flex flex-col">
-              <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
-                <CustomIcon name="musicNote" size={32} />
+            {/* Hero card — phone mockup + text (spans 2 cols) */}
+            <div className="md:col-span-2 bg-surface border border-white/10 rounded-2xl p-10 relative overflow-hidden flex flex-col md:flex-row items-center gap-8">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent pointer-events-none rounded-2xl" />
+
+              {/* Text side */}
+              <div className="relative z-10 flex flex-col flex-1 min-h-[260px]">
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 shrink-0">
+                  <Icons.shieldCheck className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-black text-white mb-4 leading-tight">
+                  Every song reviewed<br />by a real human.
+                </h3>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Not an algorithm. McKinzie and our team of musicians listen to every track before it reaches your family.
+                </p>
+                <div className="mt-auto pt-8 flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <span className="text-sm text-text-secondary font-medium">Zero Surprises — Guaranteed</span>
+                </div>
               </div>
-              <h3 className="text-white text-lg font-bold mb-3">All Genres</h3>
-              <p className="text-text-secondary text-sm text-left leading-relaxed">
-                Original pop, hip-hop, country, rock &amp; R&amp;B — created clean, exclusive to Psalmix.
-              </p>
+
+              {/* Phone mockup */}
+              <div className="relative z-10 shrink-0 flex justify-center">
+                <div className="relative w-[150px] md:w-[170px]">
+                  {/* Glow behind phone */}
+                  <div className="absolute inset-0 rounded-[2.5rem] blur-2xl bg-primary/25 scale-110 -z-10" />
+                  {/* Phone frame */}
+                  <div className="rounded-[2rem] overflow-hidden border-[3px] border-white/10 shadow-2xl shadow-primary/20">
+                    <Image
+                      src="/images/app-screenshot.jpg"
+                      alt="Psalmix app — music player"
+                      width={170}
+                      height={340}
+                      className="w-full h-auto block"
+                      style={{ borderRadius: "1.6rem" }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Family Plan */}
+            {/* Family Plan card */}
             <div className="bg-surface border border-white/10 rounded-2xl p-8 flex flex-col">
-              <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
-                <Icons.users className="w-8 h-8 text-primary" />
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
+                <Icons.users className="w-7 h-7 text-primary" />
               </div>
               <h3 className="text-white text-lg font-bold mb-3">Family Plan</h3>
               <p className="text-text-secondary text-sm text-left leading-relaxed">
@@ -55,37 +87,42 @@ export function ComparisonSection({ Icons, CustomIcon }: ComparisonSectionProps)
               </p>
             </div>
 
-            {/* Zero Surprises — featured */}
-            <div className="bg-surface border border-primary/30 rounded-2xl p-8 flex flex-col shadow-[0_0_30px_rgba(124,59,237,0.15)]">
-              <div className="text-xs font-bold text-primary uppercase tracking-widest mb-4">
-                Key Differentiator
+            {/* All Genres card */}
+            <div className="bg-surface border border-white/10 rounded-2xl p-8 flex flex-col">
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
+                <CustomIcon name="musicNote" size={28} />
               </div>
-              <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
-                <Icons.shieldCheck className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-white text-lg font-bold mb-3">Zero Surprises</h3>
+              <h3 className="text-white text-lg font-bold mb-3">All Genres</h3>
               <p className="text-text-secondary text-sm text-left leading-relaxed">
-                No filtered mainstream hits. No clean radio edits. Music created safe from the very first note.
+                Original pop, hip-hop, country, rock &amp; R&amp;B — created clean, exclusive to Psalmix.
               </p>
             </div>
 
-            {/* Simple Pricing */}
+            {/* Simple Pricing card */}
             <div className="bg-surface border border-white/10 rounded-2xl p-8 flex flex-col">
-              <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-8 h-8 text-primary"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
+                <svg viewBox="0 0 24 24" className="w-7 h-7 text-primary" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.41 0l7.41-7.41a1 1 0 0 0 0-1.41z" />
                   <circle cx="7" cy="7" r="1.5" fill="currentColor" />
                 </svg>
               </div>
               <h3 className="text-white text-lg font-bold mb-3">Simple Pricing</h3>
               <p className="text-text-secondary text-sm text-left leading-relaxed">
-                $7.99/mo or $59.99/year — less than half of Spotify Family
+                $7.99/mo or $59.99/year — less than half of Spotify Family.
+              </p>
+            </div>
+
+            {/* Zero Surprises — featured, spans 1 col */}
+            <div className="bg-surface border border-primary/30 rounded-2xl p-8 flex flex-col shadow-[0_0_30px_rgba(124,59,237,0.15)]">
+              <div className="text-xs font-bold text-primary uppercase tracking-widest mb-4">
+                Key Differentiator
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 shrink-0">
+                <Icons.shieldCheck className="w-7 h-7 text-primary" />
+              </div>
+              <h3 className="text-white text-lg font-bold mb-3">Zero Surprises</h3>
+              <p className="text-text-secondary text-sm text-left leading-relaxed">
+                No filtered mainstream hits. No clean radio edits. Music created safe from the very first note.
               </p>
             </div>
 
