@@ -1,12 +1,11 @@
 "use client";
 
 interface CTASectionProps {
-  referralCode?: string;
   spotsRemaining: number;
-  SignupForm: React.ComponentType<{ variant: "hero" | "footer"; referralCode?: string }>;
+  SignupForm: React.ComponentType<{ variant: "hero" | "footer" }>;
 }
 
-export function CTASection({ referralCode, spotsRemaining, SignupForm }: CTASectionProps) {
+export function CTASection({ spotsRemaining, SignupForm }: CTASectionProps) {
   return (
     <section className="py-24 bg-background relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-6 relative z-10">
@@ -37,7 +36,7 @@ export function CTASection({ referralCode, spotsRemaining, SignupForm }: CTASect
 
             {/* Form with card anchor */}
             <div className="bg-background/50 backdrop-blur-sm rounded-2xl border border-white/10 p-4 max-w-md mx-auto mb-6">
-              <SignupForm variant="footer" referralCode={referralCode} />
+              <SignupForm variant="footer" />
             </div>
 
             {/* Spots remaining */}

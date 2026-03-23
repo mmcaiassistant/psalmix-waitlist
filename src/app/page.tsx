@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import { CustomIcon as CustomIconComponent } from "@/components/CustomIcon";
 type AnyCustomIcon = React.ComponentType<{ name: string; size?: number }>;
@@ -52,59 +52,49 @@ const Icons = {
 
 function SignupForm({
   variant = "hero",
-  referralCode,
 }: {
   variant?: "hero" | "footer";
-  referralCode?: string;
 }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [result, setResult] = useState<{ position?: number; referralCode?: string; message?: string } | null>(null);
-  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [alreadyOnList, setAlreadyOnList] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
-    setResult(null);
+    setErrorMessage(null);
 
     try {
       const res = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, referralCode }),
+        body: JSON.stringify({ email }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong");
 
+      setAlreadyOnList(!!data.already);
       setStatus("success");
-      setResult({
-        position: data.position,
-        referralCode: data.referralCode,
-        message: data.already ? "You're already on the list!" : "You're in!",
-      });
       setEmail("");
-
-      if (data.referralCode) {
-        router.push(`/dashboard/${data.referralCode}`);
-      }
     } catch (err: unknown) {
       setStatus("error");
-      const message = err instanceof Error ? err.message : "Unable to join right now.";
-      setResult({ message });
+      setErrorMessage(err instanceof Error ? err.message : "Unable to join right now.");
     }
   };
 
-  if (status === "success" && result) {
+  if (status === "success") {
     return (
       <div className="rounded-2xl bg-surface border border-white/10 p-6 text-center max-w-md shadow-xl">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
-          <Icons.checkCircle className="w-8 h-8 text-green-600" />
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
+          <Icons.checkCircle className="w-8 h-8 text-green-400" />
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">{result.message}</h3>
-        <p className="text-text-secondary mb-4">
-          Your position: <span className="text-primary font-bold">#{result.position?.toLocaleString()}</span>
+        <h3 className="text-xl font-bold text-white mb-2">
+          {alreadyOnList ? "You're already on the list!" : "You're in!"}
+        </h3>
+        <p className="text-text-secondary text-sm">
+          We&apos;ll send you an email when beta opens on April 15.
         </p>
-        <p className="text-sm text-text-secondary">Redirecting to your dashboard…</p>
       </div>
     );
   }
@@ -136,13 +126,8 @@ function SignupForm({
             {status === "loading" ? "Saving your spot..." : "Save My Spot — It's Free"}
           </button>
         </div>
-        {status === "error" && result?.message && (
-          <p className="text-red-500 text-sm mt-2 text-center">{result.message}</p>
-        )}
-        {referralCode && (
-          <p className="text-xs text-text-secondary mt-3 text-center">
-            You were referred by a friend — you&apos;ll both move up the line.
-          </p>
+        {status === "error" && errorMessage && (
+          <p className="text-red-500 text-sm mt-2 text-center">{errorMessage}</p>
         )}
         <p className="text-xs text-text-secondary mt-3 text-center flex items-center justify-center gap-2">
           <svg className="w-4 h-4 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -175,8 +160,8 @@ function SignupForm({
           {status === "loading" ? "Saving your spot..." : "Save My Spot — It's Free"}
         </button>
       </div>
-      {status === "error" && result?.message && (
-        <p className="text-red-300 text-sm mt-2 text-center">{result.message}</p>
+      {status === "error" && errorMessage && (
+        <p className="text-red-300 text-sm mt-2 text-center">{errorMessage}</p>
       )}
       <p className="text-xs text-white/60 mt-3 text-center">Free to join · $7.99/mo at launch · Cancel anytime</p>
     </form>
@@ -221,7 +206,7 @@ function HomeInner() {
   const [count, setCount] = useState<number | null>(null);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
   const searchParams = useSearchParams();
-  const referralCode = searchParams.get("ref") ?? undefined;
+  void searchParams; // referral feature removed — keeping hook for future use
 
   useEffect(() => {
     fetch("/api/stats")
@@ -259,7 +244,6 @@ function HomeInner() {
             <a className="text-sm font-medium hover:text-primary transition-colors" href="#problem">Problem</a>
             <a className="text-sm font-medium hover:text-primary transition-colors" href="#solution">Solution</a>
             <a className="text-sm font-medium hover:text-primary transition-colors" href="#founding">Founding</a>
-            <a className="text-sm font-medium hover:text-primary transition-colors" href="#referrals">Referrals</a>
             <a className="text-sm font-medium hover:text-primary transition-colors" href="#faq">FAQ</a>
           </nav>
           <a href="#signup" className="bg-primary text-white px-5 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform active:scale-95 min-h-[44px] flex items-center">
@@ -272,7 +256,6 @@ function HomeInner() {
         {/* Hero Section */}
         <HeroSection
           displayCount={displayCount}
-          referralCode={referralCode}
           SignupForm={SignupForm}
           Icons={Icons}
           CustomIcon={CustomIcon}
@@ -466,7 +449,6 @@ function HomeInner() {
 
         {/* Final CTA */}
         <CTASection
-          referralCode={referralCode}
           spotsRemaining={spotsRemaining}
           SignupForm={SignupForm}
         />

@@ -4,8 +4,7 @@ import React from "react";
 
 interface HeroSectionProps {
   displayCount: number | null;
-  referralCode?: string;
-  SignupForm: React.ComponentType<{ variant: "hero" | "footer"; referralCode?: string }>;
+  SignupForm: React.ComponentType<{ variant: "hero" | "footer" }>;
   Icons: {
     sparkles: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     users: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -15,7 +14,6 @@ interface HeroSectionProps {
 
 export function HeroSection({
   displayCount,
-  referralCode,
   SignupForm,
 }: HeroSectionProps) {
   return (
@@ -51,7 +49,7 @@ export function HeroSection({
         </p>
 
         {/* Signup Form */}
-        <SignupForm variant="hero" referralCode={referralCode} />
+        <SignupForm variant="hero" />
 
         {/* Waitlist count — minimal, only when meaningful */}
         {displayCount !== null && displayCount >= 50 && (
