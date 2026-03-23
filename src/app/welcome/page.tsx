@@ -165,9 +165,9 @@ function WelcomeContent() {
 
         {/* Share nudge — gradient border card */}
         <div
-          className="mb-8 p-[1px] rounded-2xl"
+          className="mb-8 p-[2px] rounded-2xl"
           style={{
-            background: "linear-gradient(135deg, rgba(139,75,207,0.6) 0%, rgba(6,182,212,0.4) 100%)",
+            background: "linear-gradient(135deg, #8B4BCF 0%, #06B6D4 100%)",
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(12px)",
             transition: "opacity 0.5s ease, transform 0.5s ease",
@@ -202,7 +202,7 @@ function WelcomeContent() {
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white text-sm font-medium hover:bg-white/10 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#06B6D4]/40 bg-[#06B6D4]/5 text-[#06B6D4] text-sm font-medium hover:bg-[#06B6D4]/10 transition-colors"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               Share on X
