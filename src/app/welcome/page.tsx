@@ -31,13 +31,14 @@ function WelcomeContent() {
   return (
     <div className="relative min-h-screen bg-[#111826] flex flex-col items-center justify-center px-6 py-16 overflow-hidden">
 
-      {/* Deep radial glow — purple behind, cyan top-right whisper */}
+      {/* Deep radial glow — strong purple center, cyan accent corners */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 55% at 50% 42%, rgba(139,75,207,0.22) 0%, transparent 70%), " +
-            "radial-gradient(ellipse 40% 30% at 80% 15%, rgba(6,182,212,0.10) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 60% at 50% 45%, rgba(139,75,207,0.35) 0%, transparent 65%), " +
+            "radial-gradient(ellipse 50% 40% at 85% 10%, rgba(6,182,212,0.20) 0%, transparent 55%), " +
+            "radial-gradient(ellipse 40% 30% at 15% 85%, rgba(139,75,207,0.15) 0%, transparent 60%)",
         }}
       />
 
@@ -117,17 +118,19 @@ function WelcomeContent() {
         <h1
           className="text-5xl sm:text-6xl font-black mb-4 leading-tight"
           style={{
-            background: "linear-gradient(135deg, #ffffff 30%, #A66BD9 70%, #06B6D4 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(16px)",
             transition: "opacity 0.5s ease, transform 0.5s ease",
             transitionDelay: "0.15s",
           }}
         >
-          You&apos;re in!
+          <span className="text-white">You&apos;re </span>
+          <span style={{
+            background: "linear-gradient(135deg, #8B4BCF 0%, #A66BD9 40%, #06B6D4 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}>in!</span>
         </h1>
 
         {/* Primary subtext */}
@@ -160,23 +163,26 @@ function WelcomeContent() {
           Beta opens <span className="text-[#06B6D4] font-semibold">April 15, 2026</span> — early joiners get first access.
         </p>
 
-        {/* Share nudge */}
+        {/* Share nudge — gradient border card */}
         <div
-          className="mb-8 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6"
+          className="mb-8 p-[1px] rounded-2xl"
           style={{
+            background: "linear-gradient(135deg, rgba(139,75,207,0.6) 0%, rgba(6,182,212,0.4) 100%)",
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(12px)",
             transition: "opacity 0.5s ease, transform 0.5s ease",
             transitionDelay: "0.38s",
           }}
         >
+        <div className="rounded-2xl bg-[#1a2235] p-6">
           <p className="text-white font-semibold mb-1 text-sm">Know a family who&apos;d love this?</p>
           <p className="text-slate-500 text-xs mb-4">Share Psalmix — the more families join, the faster we build.</p>
           <div className="flex flex-col sm:flex-row gap-2">
-            {/* Copy link */}
+            {/* Copy link — primary action, filled purple */}
             <button
               onClick={handleCopy}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white text-sm font-medium hover:bg-white/10 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-white text-sm font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
+              style={{ background: "linear-gradient(135deg, #8B4BCF, #7B3BBF)" }}
             >
               {copied ? (
                 <>
@@ -202,6 +208,7 @@ function WelcomeContent() {
               Share on X
             </a>
           </div>
+        </div>
         </div>
 
         {/* Back link */}
