@@ -2,10 +2,10 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CustomIcon as CustomIconComponent } from "@/components/CustomIcon";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CustomIcon = CustomIconComponent as React.ComponentType<{ name: string; size?: number }>;
 import React from "react";
+import { CustomIcon as CustomIconComponent } from "@/components/CustomIcon";
+type AnyCustomIcon = React.ComponentType<{ name: string; size?: number }>;
+const CustomIcon = CustomIconComponent as AnyCustomIcon;
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProblemSection } from "@/components/sections/ProblemSection";
 import { ComparisonSection } from "@/components/sections/ComparisonSection";
