@@ -10,29 +10,29 @@ export default function RewardTier({ tier, isUnlocked }: RewardTierProps) {
     <div
       className={`rounded-2xl border p-4 transition ${
         isUnlocked
-          ? "border-emerald-200 bg-emerald-50"
-          : "border-amber-100 bg-white/80"
+          ? "border-[#8B4BCF]/40 bg-[#8B4BCF]/10"
+          : "border-white/10 bg-white/[0.03]"
       }`}
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-amber-900">
+          <p className="text-sm font-semibold text-white">
             {tier.badge}
           </p>
-          <p className="text-xs text-amber-700">{tier.reward}</p>
+          <p className="text-xs text-slate-400">{tier.reward}</p>
         </div>
         <span
-          className={`rounded-full px-3 py-1 text-xs font-semibold ${
+          className={`rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap ${
             isUnlocked
-              ? "bg-emerald-500 text-white"
-              : "bg-amber-100 text-amber-700"
+              ? "bg-[#8B4BCF] text-white"
+              : "bg-white/10 text-slate-400"
           }`}
         >
           {tier.referrals} referrals
         </span>
       </div>
-      <p className="mt-3 text-xs text-amber-700">
-        {isUnlocked ? "Unlocked 🎉" : "Keep sharing to unlock"}
+      <p className="mt-3 text-xs text-slate-400">
+        {isUnlocked ? "Unlocked" : "Keep sharing to unlock"}
       </p>
     </div>
   );

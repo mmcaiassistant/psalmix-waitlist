@@ -20,18 +20,18 @@ export default function ReferralLink({ url }: ReferralLinkProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-amber-100 bg-white/90 p-4">
-      <p className="text-sm font-semibold text-amber-800">Your referral link</p>
+    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+      <p className="text-sm font-semibold text-white">Your referral link</p>
       <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
         <input
           readOnly
           value={url}
-          className="w-full rounded-full border border-amber-100 bg-amber-50 px-4 py-2 text-sm text-amber-900"
+          className="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300"
         />
         <button
           type="button"
           onClick={handleCopy}
-          className="rounded-full bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-600"
+          className="rounded-full bg-[#8B4BCF] px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#7B3BBF]"
         >
           {copied ? "Copied" : "Copy"}
         </button>

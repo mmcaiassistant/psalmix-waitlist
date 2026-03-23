@@ -68,28 +68,30 @@ export default function DashboardPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-rose-50 px-6 py-12 text-amber-950">
+    <div className="min-h-screen bg-[#111826] px-6 py-12 text-white">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
-        <header className="rounded-3xl bg-white/90 p-8 shadow-lg">
-          <p className="text-sm font-semibold uppercase tracking-wide text-amber-600">
-            Referral Dashboard
-          </p>
-          <h1 className="text-3xl font-bold sm:text-4xl">
-            Your PsalMix progress
+        <header className="rounded-2xl bg-[#1C2333] border border-white/10 p-8">
+          <div className="inline-flex items-center px-3 py-1 rounded-full border border-[#8B4BCF]/30 bg-[#8B4BCF]/10 mb-4">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#8B4BCF]">
+              Referral Dashboard
+            </span>
+          </div>
+          <h1 className="text-3xl font-bold sm:text-4xl text-white">
+            Your Psalmix progress
           </h1>
-          <p className="mt-2 text-sm text-amber-700">
+          <p className="mt-2 text-sm text-slate-400">
             Track your position, referrals, and rewards anytime.
           </p>
         </header>
 
         {loading ? (
-          <p className="text-sm text-amber-700">Loading your dashboard…</p>
+          <p className="text-sm text-slate-400">Loading your dashboard…</p>
         ) : fetchError ? (
-          <div className="rounded-2xl bg-rose-50 border border-rose-200 p-6 text-center text-rose-700">
+          <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-6 text-center text-red-400">
             <p className="font-semibold">Could not load your dashboard.</p>
-            <p className="text-sm mt-1">
+            <p className="text-sm mt-1 text-red-400/70">
               The link may be invalid, or there was a server error. Please try again or re-join at{" "}
-              <a href="/" className="underline">psalmix.com</a>.
+              <a href="/" className="underline text-[#8B4BCF]">psalmix-waitlist.vercel.app</a>.
             </p>
           </div>
         ) : (
@@ -107,9 +109,9 @@ export default function DashboardPage({
         )}
 
         <section className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-          <div className="rounded-3xl border border-amber-100 bg-white/90 p-6 shadow-sm">
-            <h2 className="text-xl font-bold">Move up the list</h2>
-            <p className="mt-2 text-sm text-amber-700">
+          <div className="rounded-2xl border border-white/10 bg-[#1C2333] p-6">
+            <h2 className="text-xl font-bold text-white">Move up the list</h2>
+            <p className="mt-2 text-sm text-slate-400">
               Each friend who joins through your link bumps you forward. 3 referrals = beta access. You&apos;re one share away.
             </p>
             <div className="mt-4 flex flex-col gap-4">
@@ -117,8 +119,8 @@ export default function DashboardPage({
               <ShareButtons url={shareUrl} onShare={trackShare} />
             </div>
           </div>
-          <div className="rounded-3xl border border-amber-100 bg-white/90 p-6 shadow-sm">
-            <h2 className="text-xl font-bold">Next reward</h2>
+          <div className="rounded-2xl border border-white/10 bg-[#1C2333] p-6">
+            <h2 className="text-xl font-bold text-white">Next reward</h2>
             <div className="mt-4">
               <RewardProgress referrals={data?.referrals ?? 0} />
             </div>

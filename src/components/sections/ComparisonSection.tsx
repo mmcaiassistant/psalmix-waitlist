@@ -132,56 +132,89 @@ export function ComparisonSection({ Icons, CustomIcon }: ComparisonSectionProps)
 
       {/* ── Comparison Table ── */}
       <section className="py-20 px-4 bg-surface/50">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
-              How We Stack Up
+              Why Parents Choose Psalmix
             </h2>
             <p className="text-text-secondary text-lg">
-              The numbers don&apos;t lie.
+              The only streaming service built for families from day one.
             </p>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-white/10">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-white/10">
-                  <th className="py-5 px-6 text-left text-slate-400 font-semibold w-1/3">
-                    Feature
-                  </th>
-                  <th className="py-5 px-6 text-center text-slate-400 font-semibold">
-                    Spotify Family
-                  </th>
-                  <th className="py-5 px-6 text-center bg-primary/20 border-l-2 border-primary">
-                    <div className="text-xl font-black text-primary">Psalmix</div>
-                    <div className="mt-1 inline-flex items-center px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-bold tracking-wide">
-                      BEST FOR FAMILIES
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/10">
-                {comparisonRows.map((row) => (
-                  <tr key={row.label} className={row.highlight ? "bg-white/[0.02]" : ""}>
-                    <td className="py-4 px-6 text-slate-300 font-medium">{row.label}</td>
-                    <td className="py-4 px-6 text-center text-slate-500">{row.spotify}</td>
-                    <td className="py-4 px-6 text-center text-white font-semibold bg-primary/5 border-l-2 border-primary/30">
-                      {row.psalmix}
-                      {row.highlight && (
-                        <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-bold">
-                          Save $12/mo
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Stitch-style 3-column grid table */}
+          <div className="grid grid-cols-3 gap-4">
+            {/* Column headers */}
+            <div className="col-span-1" />
+            <div className="col-span-1 bg-surface rounded-t-2xl px-6 pt-6 pb-4 text-center border border-white/5 border-b-0">
+              <p className="text-text-secondary text-sm font-bold uppercase tracking-widest">Spotify / Apple</p>
+            </div>
+            <div className="col-span-1 bg-primary/10 rounded-t-2xl px-6 pt-6 pb-4 text-center border border-primary/30 border-b-0 relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-primary text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                Best for Families
+              </div>
+              <p className="text-primary text-sm font-black uppercase tracking-widest mt-2">Psalmix</p>
+            </div>
+
+            {/* Row: Content Review */}
+            <div className="flex items-center px-4 py-5 bg-surface/40 border-t border-white/5 text-sm font-medium text-slate-300">Content Review</div>
+            <div className="flex items-center justify-center px-4 py-5 bg-surface border-t border-white/5 text-center">
+              <span className="text-text-secondary text-sm">Algorithm only</span>
+            </div>
+            <div className="flex items-center justify-center px-4 py-5 bg-primary/10 border-t border-primary/20 text-center">
+              <span className="text-white text-sm font-semibold">Human + AI</span>
+            </div>
+
+            {/* Row: Explicit Content */}
+            <div className="flex items-center px-4 py-5 bg-surface/40 border-t border-white/5 text-sm font-medium text-slate-300">Explicit Content</div>
+            <div className="flex items-center justify-center px-4 py-5 bg-surface border-t border-white/5">
+              <svg className="w-5 h-5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </div>
+            <div className="flex items-center justify-center px-4 py-5 bg-primary/10 border-t border-primary/20">
+              <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+
+            {/* Row: 100% Ad-Free */}
+            <div className="flex items-center px-4 py-5 bg-surface/40 border-t border-white/5 text-sm font-medium text-slate-300">100% Ad-Free</div>
+            <div className="flex items-center justify-center px-4 py-5 bg-surface border-t border-white/5">
+              <span className="text-text-secondary text-sm">Premium only</span>
+            </div>
+            <div className="flex items-center justify-center px-4 py-5 bg-primary/10 border-t border-primary/20">
+              <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+
+            {/* Row: Per-Kid Profiles */}
+            <div className="flex items-center px-4 py-5 bg-surface/40 border-t border-white/5 text-sm font-medium text-slate-300">Per-Kid Profiles</div>
+            <div className="flex items-center justify-center px-4 py-5 bg-surface border-t border-white/5">
+              <span className="text-text-secondary text-sm">Limited</span>
+            </div>
+            <div className="flex items-center justify-center px-4 py-5 bg-primary/10 border-t border-primary/20">
+              <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+
+            {/* Row: Built for Families */}
+            <div className="flex items-center px-4 py-5 bg-surface/40 border-t border-white/5 text-sm font-medium text-slate-300">Built for Families</div>
+            <div className="flex items-center justify-center px-4 py-5 bg-surface border-t border-white/5">
+              <svg className="w-5 h-5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </div>
+            <div className="flex items-center justify-center px-4 py-5 bg-primary/10 border-t border-primary/20">
+              <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+
+            {/* Row: Price — bottom rounded */}
+            <div className="flex items-center px-4 py-5 bg-surface/40 border-t border-white/5 rounded-bl-2xl text-sm font-medium text-slate-300">Monthly Price</div>
+            <div className="flex items-center justify-center px-4 py-5 bg-surface border-t border-white/5">
+              <span className="text-text-secondary text-sm">$15.99 – $19.99/mo</span>
+            </div>
+            <div className="flex flex-col items-center justify-center px-4 py-5 bg-primary/10 border-t border-primary/20 rounded-br-2xl gap-1">
+              <span className="text-white font-black text-lg">$7.99/mo</span>
+              <span className="text-xs font-bold text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full">Save $96/yr</span>
+            </div>
           </div>
 
-          <p className="text-center text-text-secondary mt-6 text-sm">
-            The only platform built from scratch for families who don&apos;t compromise.{" "}
-            <a href="#signup" className="text-primary font-semibold hover:underline">
+          <p className="text-center text-text-secondary mt-8 text-sm italic">
+            The only service built for families from day one — not retrofitted, not filtered after the fact.{" "}
+            <a href="#signup" className="text-primary font-semibold hover:underline not-italic">
               Reserve your spot →
             </a>
           </p>

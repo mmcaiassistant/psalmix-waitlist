@@ -105,42 +105,37 @@ export default function WelcomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-white to-rose-50 px-6 py-12 text-amber-950">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-10">
-        <section className="rounded-3xl bg-white/90 p-8 shadow-lg">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-amber-600">
-                PsalMix Waitlist
-              </p>
-              <h1 className="text-3xl font-bold sm:text-4xl">
-                You&apos;re in!
-              </h1>
-              <p className="mt-2 text-sm text-amber-700">
-                Share your link to move up the line and earn sweet rewards.
-              </p>
-            </div>
-            <Celebration />
+    <div className="min-h-screen bg-[#111826] px-6 py-12 text-white">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-8">
+        {/* Header */}
+        <div className="text-center pt-4 pb-2">
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-[#8B4BCF]/30 bg-[#8B4BCF]/10 mb-6">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#8B4BCF]">
+              Psalmix Waitlist
+            </span>
           </div>
+          <h1 className="text-4xl sm:text-5xl font-black mb-3">You&apos;re in!</h1>
+          <p className="text-slate-400 text-lg">Share your link to move up the line and unlock rewards.</p>
+        </div>
 
+        <section className="rounded-2xl bg-[#1C2333] border border-white/10 p-8">
           {loading ? (
-            <p className="mt-6 text-sm text-amber-700">Loading your stats…</p>
+            <p className="text-slate-400 text-sm">Loading your stats…</p>
           ) : (
             <>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-2 mb-6">
                 <PositionDisplay label="Your position" value={data?.position ?? 0} prefix="#" />
                 <PositionDisplay
                   label={data?.peopleAhead === 1 ? "Person ahead of you" : "People ahead of you"}
                   value={data?.peopleAhead ?? 0}
                 />
               </div>
-              {/* UX FIX: Let the user get back to their dashboard if they close and return */}
               {code && (
-                <p className="mt-4 text-xs text-amber-600">
+                <p className="text-xs text-slate-500 mb-6">
                   Bookmark this page or{" "}
                   <a
                     href={`/dashboard/${code}`}
-                    className="underline font-semibold hover:text-amber-800 transition-colors"
+                    className="text-[#8B4BCF] underline font-semibold hover:text-[#A66BD9] transition-colors"
                   >
                     visit your dashboard anytime
                   </a>{" "}
@@ -150,21 +145,21 @@ export default function WelcomePage() {
             </>
           )}
 
-          <div className="mt-8 flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
             <ReferralLink url={shareUrl} />
             <ShareButtons url={shareUrl} onShare={trackShare} />
           </div>
         </section>
 
-        <section className="rounded-3xl border border-amber-100 bg-white/90 p-8 shadow-sm">
-          <h2 className="text-2xl font-bold">Referral rewards</h2>
-          <p className="mt-2 text-sm text-amber-700">
-            Each referral moves you closer to premium perks.
+        <section className="rounded-2xl bg-[#1C2333] border border-white/10 p-8">
+          <h2 className="text-2xl font-bold mb-2">Referral rewards</h2>
+          <p className="text-slate-400 text-sm mb-5">
+            Each referral moves you closer to exclusive perks.
           </p>
-          <div className="mt-5">
+          <div className="mb-6">
             <RewardProgress referrals={data?.referrals ?? 0} />
           </div>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {REWARD_TIERS.map((tier) => (
               <RewardTier
                 key={tier.badge}

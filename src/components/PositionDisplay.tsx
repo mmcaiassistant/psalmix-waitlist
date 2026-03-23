@@ -32,11 +32,11 @@ export default function PositionDisplay({
   }, [motionValue, value]);
 
   return (
-    <div className="rounded-3xl border border-amber-100 bg-white/90 p-6 shadow-sm">
-      <p className="text-sm font-semibold uppercase tracking-wide text-amber-600">
+    <div className="rounded-2xl border border-white/10 bg-[#1C2333] p-6">
+      <p className="text-sm font-semibold uppercase tracking-wide text-[#8B4BCF]">
         {label}
       </p>
-      <div className="mt-2 text-4xl font-bold text-amber-950">
+      <div className="mt-2 text-4xl font-bold text-white">
         {prefix}
         {displayValue}
         {suffix}
