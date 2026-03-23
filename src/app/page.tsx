@@ -224,8 +224,9 @@ function HomeInner() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Show real count only — no seeding with fake numbers
-  const displayCount = count !== null ? Math.max(count, 1) : null;
+  // Show real count only — never fabricate social proof with Math.max(count, 1)
+  // The HeroSection already gates display behind count >= 50
+  const displayCount = count;
   const foundingCount = displayCount !== null ? Math.min(displayCount, 500) : 0;
   const spotsRemaining = foundingCount > 0 ? Math.max(500 - foundingCount, 0) : 500;
 

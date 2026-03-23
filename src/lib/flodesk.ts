@@ -6,9 +6,8 @@ const FLODESK_API_BASE = 'https://api.flodesk.com/v1';
 const API_KEY = process.env.FLODESK_API_KEY;
 const SEGMENT_ID = process.env.FLODESK_WAITLIST_SEGMENT_ID;
 
-if (!API_KEY) {
-  console.warn('⚠️ FLODESK_API_KEY not configured - email integration disabled');
-}
+// Note: API_KEY availability is checked at call-time inside each function, not here.
+// Module-level warnings fire during Vercel builds and pollute CI logs.
 
 interface FlodeskSubscriber {
   email: string;
