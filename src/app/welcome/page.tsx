@@ -124,13 +124,7 @@ function WelcomeContent() {
             transitionDelay: "0.15s",
           }}
         >
-          <span className="text-white">You&apos;re </span>
-          <span style={{
-            background: "linear-gradient(135deg, #8B4BCF 0%, #A66BD9 40%, #06B6D4 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}>in!</span>
+          You&apos;re in!
         </h1>
 
         {/* Primary subtext */}
@@ -163,26 +157,23 @@ function WelcomeContent() {
           Beta opens <span className="text-[#06B6D4] font-semibold">April 15, 2026</span> — early joiners get first access.
         </p>
 
-        {/* Share nudge — gradient border card */}
+        {/* Share nudge */}
         <div
-          className="mb-8 p-[2px] rounded-2xl"
+          className="mb-8 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6"
           style={{
-            background: "linear-gradient(135deg, #8B4BCF 0%, #06B6D4 100%)",
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(12px)",
             transition: "opacity 0.5s ease, transform 0.5s ease",
             transitionDelay: "0.38s",
           }}
         >
-        <div className="rounded-2xl bg-[#1a2235] p-6">
-          <p className="text-white font-semibold mb-1 text-sm">Know a family who&apos;d love this?</p>
-          <p className="text-slate-500 text-xs mb-4">Share Psalmix — the more families join, the faster we build.</p>
+          <p className="text-white font-semibold mb-1 text-sm">Know a parent who&apos;s tired of playing music cop?</p>
+          <p className="text-slate-500 text-xs mb-4">Send them this — they&apos;ll thank you.</p>
           <div className="flex flex-col sm:flex-row gap-2">
             {/* Copy link — primary action, filled purple */}
             <button
               onClick={handleCopy}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-white text-sm font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
-              style={{ background: "linear-gradient(135deg, #8B4BCF, #7B3BBF)" }}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#8B4BCF] text-white text-sm font-semibold transition-all hover:bg-[#7B3BBF] active:scale-[0.98]"
             >
               {copied ? (
                 <>
@@ -208,7 +199,6 @@ function WelcomeContent() {
               Share on X
             </a>
           </div>
-        </div>
         </div>
 
         {/* Back link */}
