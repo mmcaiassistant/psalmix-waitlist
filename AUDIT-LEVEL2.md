@@ -1,152 +1,107 @@
-# PsalMix Waitlist — Audit Level 2 Report
-**Date:** 2026-03-22  
+# PsalMix Waitlist — Audit Level 2 Report (Night 2)
+**Date:** 2026-03-23  
 **Auditor:** Nova (Forge)  
-**Commit:** 519e98d  
-**Deploy:** dpl_BU16UEfPJuQZCkN41EeAv9PUPb3J → READY
+**Commit:** 526a132  
+**Deploy:** dpl_EjqeVKbqHu8KvhF5Up88KA6dYwyL → READY ✅
 
 ---
 
-## STEP 1 — Files Read
+## Step 1 — Files Read (Complete)
 
 | File | Status |
 |---|---|
 | `src/app/api/signup/route.ts` | ✅ Read |
-| `src/app/api/admin/auth/route.ts` | ✅ Read |
-| `src/app/api/admin/users/route.ts` | ✅ Read |
-| `src/app/api/admin/stats/route.ts` | ✅ Read |
-| `src/app/api/admin/export/route.ts` | ✅ Read |
-| `src/app/api/user/[code]/route.ts` | ✅ Read |
 | `src/app/api/stats/route.ts` | ✅ Read |
 | `src/app/api/share/route.ts` | ✅ Read |
-| `src/app/api/debug-flodesk/route.ts` | ✅ Read (DELETED) |
-| `src/lib/supabase.ts` | ✅ Read |
-| `src/lib/supabaseServer.ts` | ✅ Read |
+| `src/app/api/user/[code]/route.ts` | ✅ Read |
+| `src/app/api/admin/auth/route.ts` | ✅ Read |
+| `src/app/api/admin/me/route.ts` | ✅ Read |
+| `src/app/api/admin/stats/route.ts` | ✅ Read |
+| `src/app/api/admin/users/route.ts` | ✅ Read |
+| `src/app/api/admin/export/route.ts` | ✅ Read |
 | `src/lib/adminAuth.ts` | ✅ Read |
+| `src/lib/supabase.ts` | ✅ Read |
 | `src/lib/flodesk.ts` | ✅ Read |
+| `src/lib/rateLimit.ts` | ✅ Read |
 | `src/lib/position.ts` | ✅ Read |
 | `src/lib/rewards.ts` | ✅ Read |
-| `src/lib/email.ts` | ✅ Read |
 | `src/components/ReferralLink.tsx` | ✅ Read |
 | `src/components/ShareButtons.tsx` | ✅ Read |
-| `src/components/PositionDisplay.tsx` | ✅ Read |
-| `src/components/RewardTier.tsx` | ✅ Read |
-| `src/components/RewardProgress.tsx` | ✅ Read |
+| `src/components/sections/HeroSection.tsx` | ✅ Read |
+| `src/components/sections/ProblemSection.tsx` | ✅ Read |
+| `src/components/sections/SolutionSection.tsx` | ✅ Read |
+| `src/components/sections/ComparisonSection.tsx` | ✅ Read |
+| `src/components/sections/CTASection.tsx` | ✅ Read |
+| `src/components/sections/GuaranteeSection.tsx` | ✅ Read |
 | `src/app/page.tsx` | ✅ Read |
-| `src/app/welcome/page.tsx` | ✅ Read |
 | `src/app/dashboard/[code]/page.tsx` | ✅ Read |
+| `src/app/welcome/page.tsx` | ✅ Read |
 | `src/app/admin/page.tsx` | ✅ Read |
 | `src/app/privacy/page.tsx` | ✅ Read |
-| `next.config.mjs` | ✅ Read |
-| `package.json` | ✅ Read |
-| `tsconfig.json` | ✅ Read |
+| `src/app/r/[code]/page.tsx` | ✅ Read |
 
 ---
 
-## STEP 2 — Issues Found
+## Step 2 — Bugs Found
 
-### 🔴 CRITICAL
+### 🔴 SECURITY / CRITICAL
 
-#### C1 — Admin cookie path blocks all API calls
-**File:** `src/app/api/admin/auth/route.ts`  
-**Issue:** Cookie was set with `path: "/admin"`. The browser only sends cookies that match the request path. Admin API routes live at `/api/admin/*`, which does NOT fall under `/admin` — so the cookie was never sent to stats/users/export. Every admin API call returned 401, even after successful login.  
-**Impact:** Admin dashboard was completely broken — login appeared to succeed but all data fetches failed silently.  
-**Fix:** Changed `path` from `"/admin"` to `"/"` so the cookie is sent to all routes.
-
----
-
-### 🔴 SECURITY
-
-#### S1 — Debug endpoint leaked API key fragments in production
-**File:** `src/app/api/debug-flodesk/route.ts` (now deleted)  
-**Issue:** Unauthenticated GET `/api/debug-flodesk` returned:
-- `keyStart`: first 20 characters of Flodesk API key
-- `keyEnd`: last 10 characters of Flodesk API key
-- `segmentId`: Flodesk segment ID
-
-Anyone with the URL could reconstruct partial credentials and identify the key format. No auth guard existed.  
-**Fix:** Endpoint deleted entirely.
+#### S1 — Hardcoded fallback token in adminAuth.ts
+**File:** `src/lib/adminAuth.ts`  
+**Issue:** `SESSION_TOKEN = process.env.ADMIN_SESSION_TOKEN || "psalmix-admin-dev-token"` — if the environment variable is ever missing (e.g., rotation, misconfiguration, new deployment without secrets), the admin auth silently falls back to a public string that anyone who has read the open-source repo can use indefinitely to access the admin dashboard.  
+**Fix:** Changed `||` to `?? ""`. If the env var is missing, `SESSION_TOKEN` is an empty string and `isAdminAuthenticated` now short-circuits to `false` before even checking the cookie. Auth always fails when the env var is unset instead of silently granting access.
 
 ---
 
 ### 🟡 HIGH
 
-#### H1 — `first_name` never returned by admin API
-**Files:** `src/app/api/admin/users/route.ts`, `src/app/api/admin/stats/route.ts`  
-**Issue:** `first_name` is stored in the DB at signup, but:
-- `/api/admin/users` hardcoded `name: null` for every user
-- `/api/admin/stats` top-referrers query never selected `first_name`
+#### H1 — `share/route.ts`: Channel not validated
+**File:** `src/app/api/share/route.ts`  
+**Issue:** The `channel` field was accepted as any arbitrary string. A bad actor could write garbage data into `share_events` (e.g., `"<script>..."`, long strings, path traversal attempts), polluting the analytics table.  
+**Fix:** Added an allowlist: `["facebook", "instagram", "copy", "twitter", "whatsapp", "email"]`. Anything else returns HTTP 400.
 
-The admin UI showed every user as nameless.  
-**Fix:** Added `first_name` to both SELECT statements; removed `name: null` override.
-
-#### H2 — Admin page interfaces mismatched API snake_case responses
-**File:** `src/app/admin/page.tsx`  
-**Issue:** TypeScript interfaces used camelCase (`referralCount`, `createdAt`, `referredBy`, `name`) but API returns snake_case (`referral_count`, `created_at`, `referred_by`, `first_name`). React rendered blank values for referral counts, dates, names, and referred-by emails — silently.  
-**Fix:** Rewrote all admin page interfaces to match the actual API response shape.
+#### H2 — Fake social proof: `Math.max(count, 1)` shows "1 family" with 0 signups
+**File:** `src/app/page.tsx`  
+**Issue:** `const displayCount = count !== null ? Math.max(count, 1) : null` — this means when the real signup count is 0, the site would show "1 families already on the waitlist." This is false social proof. The existing `>= 50` gate in `HeroSection` was the correct control — nothing should fabricate numbers above 0.  
+**Fix:** Changed to `const displayCount = count` — passes the real number through. HeroSection's `displayCount !== null && displayCount >= 50` gate already handles hiding it at low counts correctly.
 
 ---
 
 ### 🟡 MEDIUM
 
-#### M1 — `select("*")` in user route
-**File:** `src/app/api/user/[code]/route.ts`  
-**Issue:** Fetching all columns when only `id, email, referral_code, referral_count, position` are needed. Exposes any future internal fields added to the table.  
-**Fix:** Changed to explicit column list.
-
-#### M2 — SimpleBarChart divide-by-zero
-**File:** `src/app/admin/page.tsx`  
-**Issue:** `Math.max(...data.map(d => d.count))` returns `-Infinity` when all counts are 0 (no signups). Every bar would render at `0/0 = NaN%` height.  
-**Fix:** Clamped `maxCount` to `Math.max(..., 1)`.
-
-#### M3 — Admin dashboard shows blank screen on load error
-**File:** `src/app/admin/page.tsx`  
-**Issue:** If `/api/admin/stats` or `/api/admin/users` failed (e.g., because of the cookie bug), `loadDashboardData` swallowed the error silently — admin saw nothing but a blank page with no feedback.  
-**Fix:** Added `dataError` state with a visible red error banner.
-
-#### M4 — Unused `cookies` import in adminAuth.ts
-**File:** `src/lib/adminAuth.ts`  
-**Issue:** `import { cookies } from "next/headers"` was present but never used. Causes TypeScript noise and unnecessary module reference.  
-**Fix:** Removed unused import.
+#### M1 — `flodesk.ts` module-level console.warn fires during Vercel builds
+**File:** `src/lib/flodesk.ts`  
+**Issue:** `if (!API_KEY) console.warn(...)` at module scope fires every time the module is imported during `next build`, even if Flodesk is intentionally not configured in a preview/build environment. Pollutes CI/build logs.  
+**Fix:** Removed the module-level warning. Each function already checks `if (!API_KEY)` at call-time with appropriate inline warnings.
 
 ---
 
-### 🟢 LOW / INFO
+### 🟢 LOW / INFO (Not Fixed — Noted for Level 3)
 
-#### L1 — Export silent failure in admin UI
-**File:** `src/app/admin/page.tsx`  
-**Issue:** If CSV export failed, the error was only logged to console — no user feedback.  
-**Fix:** Added `alert()` on export failure.
+#### L1 — `rateLimit.ts`: In-memory only — Vercel serverless resets it per cold start
+**File:** `src/lib/rateLimit.ts`  
+**Note:** The current in-memory Map-based rate limiter provides zero protection on Vercel production (each function invocation can be a fresh process). Should be replaced with an upstash/redis-based limiter or rely on Supabase's email uniqueness constraint as the natural spam control. Tracked for Level 3.
 
-#### L2 — `supabaseServer.ts` appears to duplicate `supabase.ts`
-**File:** `src/lib/supabaseServer.ts`  
-**Issue:** Both files export a `supabase` singleton using `SUPABASE_SERVICE_ROLE_KEY`. The "Server" version is not actually needed — API routes already import from `supabase.ts` directly. Not a bug, but dead code.  
-**Note:** Not removed to avoid risk; tracked for Level 3 cleanup.
+#### L2 — `welcome/page.tsx` is orphaned
+**Note:** Signup flow redirects to `/dashboard/[code]`, not `/welcome?code=`. The welcome page is unreachable. Tracked for Level 3 cleanup.
 
-#### L3 — `route-with-flowdesk.ts` is a dead backup file
-**File:** `src/app/api/signup/route-with-flowdesk.ts`  
-**Issue:** Old copy of the signup route that is not registered as an active Next.js route handler. Not harmful but adds confusion.  
-**Note:** Not removed; tracked for Level 3 cleanup.
-
-#### L4 — Admin export CSV includes `referred_by` as UUID, not email
+#### L3 — Admin export CSV shows UUID for "Referred By" column
 **File:** `src/app/api/admin/export/route.ts`  
-**Issue:** The "Referred By" column in the export CSV contains the internal `referred_by` UUID, not the referrer's email. McKinzie would need to cross-reference separately.  
-**Note:** Tracked for Level 3 — add referrer email lookup in export.
+**Note:** The exported CSV includes the internal Supabase UUID for `referred_by`, not the referrer's email address. Requires cross-referencing to understand. Tracked for Level 3.
+
+#### L4 — Privacy page uses light theme, inconsistent with dark site
+**Note:** `bg-amber-50` background on privacy page vs dark background everywhere else. Jarring transition. Low priority, purely cosmetic.
 
 ---
 
-## STEP 3 — Fixes Applied
+## Step 3 — Fixes Applied
 
 | # | Issue | File(s) | Fix |
 |---|---|---|---|
-| C1 | Cookie path `/admin` → `/` | `api/admin/auth/route.ts` | Changed `path: "/"` |
-| S1 | Debug endpoint leaking API key | `api/debug-flodesk/route.ts` | Deleted file |
-| H1 | `first_name` missing from admin API | `api/admin/users/route.ts`, `api/admin/stats/route.ts` | Added to SELECT |
-| H2 | Admin page interface mismatch | `app/admin/page.tsx` | Full interface rewrite to snake_case |
-| M1 | `select("*")` in user route | `api/user/[code]/route.ts` | Explicit column list |
-| M2 | Divide-by-zero in chart | `app/admin/page.tsx` | Clamp `maxCount` to ≥ 1 |
-| M3 | Silent dashboard error | `app/admin/page.tsx` | Added error banner + state |
-| M4 | Unused import in adminAuth | `lib/adminAuth.ts` | Removed |
-| L1 | Export silent failure | `app/admin/page.tsx` | Added `alert()` |
+| S1 | Hardcoded fallback admin token | `lib/adminAuth.ts` | Removed OR fallback; empty string + early `false` return |
+| H1 | Unvalidated `channel` in share endpoint | `api/share/route.ts` | Added allowlist + 400 on invalid channel |
+| H2 | `Math.max(count, 1)` fake social proof | `app/page.tsx` | Pass real count; gate in HeroSection handles display |
+| M1 | Module-level console.warn during builds | `lib/flodesk.ts` | Removed; each fn already checks at call-time |
 
 ---
 
@@ -159,21 +114,21 @@ npx tsc --noEmit → (no output) ✅ Clean
 
 ## Git
 ```
-commit 519e98d
-fix(audit-l2): cookie path, first_name, debug endpoint, type safety
+commit 526a132
+fix(audit-l2-night2): security, social proof, share validation, module warnings
 ```
 
 ## Deploy
 ```
-Deployment ID: dpl_BU16UEfPJuQZCkN41EeAv9PUPb3J
+Deployment: dpl_EjqeVKbqHu8KvhF5Up88KA6dYwyL
 State: READY ✅
+URL: psalmix-waitlist-8jg8q1xsv-mmcmedias-projects.vercel.app
 ```
 
 ---
 
-## Level 3 Backlog (Deferred)
-- Remove dead `supabaseServer.ts` after confirming no usage
-- Delete `route-with-flowdesk.ts` backup file
-- Add referrer email lookup to CSV export
-- Consider rate limiting on `/api/signup`
-- Consider timing-safe password comparison in admin auth (though password length is not the attack surface here)
+## Level 3 Backlog
+1. Replace in-memory rate limiter with Upstash Redis or similar persisted solution
+2. Remove/redirect `/welcome` page (orphaned)
+3. Add referrer email lookup to CSV export (currently shows UUID)
+4. Fix privacy page theme to match dark site design

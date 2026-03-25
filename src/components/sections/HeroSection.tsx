@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { ShieldCheck, Download, Smartphone, Laptop, Globe } from "lucide-react";
 
 interface HeroSectionProps {
   displayCount: number | null;
@@ -11,6 +13,40 @@ interface HeroSectionProps {
   };
   CustomIcon: React.ComponentType<{ name: string; size?: number }>;
 }
+
+// ─── Animated waveform ────────────────────────────────────────────────────────
+function HeroWaveform() {
+  const bars = [0.4, 0.7, 1, 0.6, 0.85, 0.5, 0.75, 0.9, 0.55, 0.65, 0.8, 0.45, 0.7, 0.6];
+  return (
+    <div className="flex items-end gap-[3px] h-12 opacity-40">
+      {bars.map((h, i) => (
+        <motion.div
+          key={i}
+          className="w-1.5 rounded-full"
+          style={{ 
+            originY: 1, 
+            background: 'linear-gradient(to top, #5b21b6, #8B4BCF, #06B6D4)' 
+          }}
+          animate={{ scaleY: [h, h * 0.3, h * 1.2, h * 0.5, h] }}
+          transition={{ 
+            duration: 2 + (i % 4) * 0.3, 
+            repeat: Infinity, 
+            ease: 'easeInOut', 
+            delay: i * 0.1 
+          }}
+          initial={{ scaleY: h }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Feature pills ────────────────────────────────────────────────────────────
+const heroPills = [
+  { icon: ShieldCheck, label: 'Human Reviewed' },
+  { icon: Download, label: 'Offline Ready' },
+  { icon: Smartphone, label: 'Any Device' },
+];
 
 export function HeroSection({
   displayCount,
@@ -28,28 +64,70 @@ export function HeroSection({
       {/* Very subtle ambient depth — invisible, just felt */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.03] to-transparent pointer-events-none" />
 
+      {/* Animated waveform background */}
+      <div className="absolute top-32 left-1/2 -translate-x-1/2 z-0">
+        <HeroWaveform />
+      </div>
+
       <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
 
-        {/* Pill badge — clean, no animation, no icons */}
-        <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 mb-10">
+        {/* Floating pill badges with icons */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-3 mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          {heroPills.map((pill, i) => (
+            <motion.div
+              key={pill.label}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.3 + i * 0.1 }}
+            >
+              <pill.icon className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-white">{pill.label}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Pill badge — clean */}
+        <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 mb-8">
           <span className="text-xs font-semibold uppercase tracking-widest text-primary">
             First 500 Families · 50% Off Forever
           </span>
         </div>
 
         {/* Headline */}
-        <h1 className="text-5xl md:text-7xl font-black leading-[1.08] tracking-tight mb-6">
+        <motion.h1 
+          className="text-5xl md:text-7xl font-black leading-[1.08] tracking-tight mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
           Family-Safe Music.{" "}
           <em className="not-italic text-primary">Finally.</em>
-        </h1>
+        </motion.h1>
 
         {/* Subheadline — short, direct, two claims */}
-        <p className="text-lg md:text-xl text-text-secondary mb-10 max-w-xl mx-auto">
+        <motion.p 
+          className="text-lg md:text-xl text-text-secondary mb-10 max-w-xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           Every song verified safe by real humans. Half the price of Spotify.
-        </p>
+        </motion.p>
 
         {/* Signup Form */}
-        <SignupForm variant="hero" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <SignupForm variant="hero" />
+        </motion.div>
 
         {/* Waitlist count — minimal, only when meaningful */}
         {displayCount !== null && displayCount >= 50 && (
