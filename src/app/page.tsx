@@ -28,7 +28,7 @@ function Navbar() {
             href="#signup"
             className="bg-[#8B4BCF] text-white px-5 py-2 rounded-full font-bold text-sm hover:bg-[#7B3BBF] hover:shadow-[0_0_20px_rgba(139,75,207,0.4)] transition-all duration-200"
           >
-            Save My Spot
+            Get Early Access
           </a>
         </div>
         {/* Mobile hamburger */}
@@ -54,7 +54,7 @@ function Navbar() {
           <a href="#how-it-works" onClick={() => setMenuOpen(false)} className="text-[#94A3B8] hover:text-white transition-colors font-medium">How it Works</a>
           <a href="#faq" onClick={() => setMenuOpen(false)} className="text-[#94A3B8] hover:text-white transition-colors font-medium">FAQ</a>
           <a href="#signup" onClick={() => setMenuOpen(false)} className="bg-[#8B4BCF] text-white px-5 py-3 rounded-full font-bold text-sm text-center hover:bg-[#7B3BBF] transition-all">
-            Save My Spot
+            Get Early Access
           </a>
         </div>
       )}
@@ -128,7 +128,7 @@ function SignupForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
             disabled={status === "loading"}
             className="bg-[#8B4BCF] text-white px-8 h-14 font-bold text-base hover:bg-[#7B3BBF] transition-all disabled:opacity-60 whitespace-nowrap flex items-center justify-center"
           >
-            {status === "loading" ? "Saving your spot..." : "Save My Spot — It's Free"}
+            {status === "loading" ? "Saving your spot..." : "Get Early Access — It's Free"}
           </button>
         </div>
         {status === "error" && errorMessage && (
@@ -136,7 +136,7 @@ function SignupForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
         )}
         <p className="text-xs text-[#64748B] mt-3 text-center flex items-center justify-center gap-2">
           <ShieldCheck className="w-4 h-4 text-[#8B4BCF]" />
-          No credit card. No catch. Takes 30 seconds.
+          No credit card. No catch. Takes 10 seconds.
         </p>
       </form>
     );
@@ -158,7 +158,7 @@ function SignupForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
         disabled={status === "loading"}
         className="bg-[#8B4BCF] text-white px-8 py-3 rounded-full font-bold hover:bg-[#7B3BBF] transition-all disabled:opacity-60 whitespace-nowrap"
       >
-        {status === "loading" ? "Saving..." : "Save My Spot"}
+        {status === "loading" ? "Saving..." : "Get Early Access"}
       </button>
     </form>
   );
@@ -211,8 +211,7 @@ function Hero() {
 
         {/* Subheadline */}
         <p className="text-lg md:text-xl text-[#94A3B8] max-w-2xl mx-auto mb-10 leading-relaxed">
-          Every song verified safe by real humans. Half the price of Spotify. No
-          hidden filters, no accidental explicit lyrics.
+          Every song is reviewed by real people — Christian musicians and homeschool parents — before it ever reaches your kids. No surprises. No sketchy playlists. Just music your whole family can feel good about.
         </p>
 
         {/* Email form */}
@@ -938,7 +937,7 @@ function StickyCTA({ spotsRemaining }: { spotsRemaining: number | null }) {
         className="flex items-center gap-3 bg-[#8B4BCF] text-white px-6 py-4 rounded-full font-bold shadow-2xl shadow-[#8B4BCF]/30 hover:scale-105 transition-transform"
       >
         <Sparkles className="w-5 h-5" />
-        <span>Save My Spot — It's Free</span>
+        <span>Get Early Access — It's Free</span>
         {spotsRemaining !== null && spotsRemaining < 500 && (
           <span className="text-white/70 text-sm">• {spotsRemaining} spots left</span>
         )}
