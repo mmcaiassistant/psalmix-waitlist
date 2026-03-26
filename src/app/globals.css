@@ -1,50 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
-
-@layer base {
-  body {
-    background-color: #0c1321;
-    color: #dce2f6;
-    font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
+:root {
+  --color-background: #111826;
+  --color-surface: #1C2333;
+  --color-primary: #8B4BCF;
+  --color-primary-hover: #7B3BBF;
+  --color-text: #FFFFFF;
+  --color-text-secondary: #94A3B8;
+  --color-border: rgba(255, 255, 255, 0.08);
 }
 
-/* Waveform animation */
-.waveform-bar {
-  animation: pulse-height 1.2s ease-in-out infinite;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
-@keyframes pulse-height {
-  0%, 100% { height: 12px; }
-  50% { height: 48px; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #111826;
+  color: #FFFFFF;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide chat widgets */
+.intercom-lightweight-app,
+#crisp-chatbox,
+[data-id="zsiq_float"],
+.zopim {
+  display: none !important;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-}
-::-webkit-scrollbar-thumb {
-  background: #dbb8ff;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #8b4bcf;
+  width: 6px;
 }
 
-/* Selection */
-::selection {
-  background: rgba(219, 184, 255, 0.3);
-  color: #efdbff;
+::-webkit-scrollbar-track {
+  background: #111826;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8B4BCF;
+  border-radius: 3px;
+}
+
+/* Focus styles */
+input:focus,
+button:focus,
+a:focus {
+  outline: 2px solid #8B4BCF;
+  outline-offset: 2px;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  }
 }
