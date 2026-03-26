@@ -261,7 +261,7 @@ function FounderStory() {
               className="w-full h-full object-cover rounded-full"
               style={{ background: "#1C2333" }}
               alt="McKinzie Bean, Founder"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL6iBh9jfnl_tCUuS9y1mmR8DbCgKvWXayOlW9q_DPotit8-iNNjrOGIu8rSU_E6P_6Ljre-utnwzDHfFCwq-EztU5Ec6ualQYQTisirRY0AxF1UKFD_ffrOtmUpGQ_AcWYUPJiiaA5dtAWlUZ7B_r3xw6T8tURR87jaZng0B0o-1jQHKxgFWh0wqBM5LJ58TFpzaVALoHOwqfm4ZzvtoBDFYu5JEyJRYiwC744-EoBOeGNu-Qn8QqRQbWjg_uTxMwyMzjsfUGvwo"
+              src="/images/mckinzie-headshot.jpg"
             />
           </div>
         </div>
