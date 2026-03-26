@@ -110,7 +110,7 @@ function SignupForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
 
   if (variant === "hero") {
     return (
-      <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto" id="signup">
+      <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto" id="signup">
         <div className="rounded-2xl border border-white/10 shadow-xl overflow-hidden flex flex-col sm:flex-row">
           <div className="flex items-center px-5 h-14 flex-grow bg-[#1C2333]">
             <Mail className="w-5 h-5 text-[#64748B] mr-3 flex-shrink-0" />
