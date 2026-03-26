@@ -7,7 +7,7 @@ import {
   Menu, ShieldCheck, Clock, Headphones, Globe, MonitorSmartphone,
   CheckCircle2, XCircle, Star, Users, BadgeCheck, MessageSquare,
   Ban, UserSearch, Lock, ChevronDown, Sparkles, Mail,
-  Download, Smartphone, Laptop, SkipForward, AlertTriangle, Eye
+  Download, Smartphone, Laptop, SkipForward, AlertTriangle, Eye, Heart
 } from "lucide-react";
 
 // ─── Navbar ────────────────────────────────────────────────────────────────────
@@ -242,7 +242,7 @@ function FounderStory() {
         {/* Section label */}
         <div className="text-center mb-12">
           <span className="text-[#8B4BCF] font-bold tracking-widest text-xs uppercase">
-            Founder's Story
+            I Got Tired of Hitting Skip
           </span>
         </div>
 
@@ -481,22 +481,22 @@ function SolutionSection() {
           <div className="space-y-6">
             {[
               {
-                icon: ShieldCheck,
+                icon: Heart,
                 color: "#8B4BCF",
-                title: "Real Ears, Not Algorithms",
-                desc: "Every song is reviewed by real people — Christian musicians and homeschool parents — before it ever reaches your kids.",
+                title: "Songs That Actually Resonate",
+                desc: "Teens feel real things — sadness, anger, frustration, heartbreak. We don't dumb that down. Every song meets your kid where they are and lifts them back up.",
               },
               {
-                icon: Globe,
+                icon: ShieldCheck,
                 color: "#06B6D4",
-                title: "Zero Surprises, Guaranteed",
-                desc: "No hidden lyrics. No surprise content. No algorithmic rabbit holes. What you see is what your kids hear.",
+                title: "Actually Safe Music",
+                desc: "No bad words. No questionable themes. No album covers you'd be embarrassed to see on the family TV. Every pixel designed to be something you'd feel good about.",
               },
               {
-                icon: Users,
+                icon: Star,
                 color: "#A66BD9",
-                title: "Built by Families, for Families",
-                desc: "Psalmix was created by a homeschool mom who needed something that didn't exist — and tested it on her own kids first.",
+                title: "I Approved Every Single Song",
+                desc: "I'm not a tech company. I'm a mom who cares too much. Every song on PsalMix is something I personally let my own kids listen to. That's a promise I make.",
               },
             ].map(({ icon: Icon, color, title, desc }) => (
               <div key={title} className="flex gap-5">
@@ -548,7 +548,7 @@ function ComparisonSection() {
                 { text: "Family-Safe Content", ok: true },
                 { text: "Offline Listening", ok: true },
                 { text: "20+ Genres", ok: true },
-                { text: "No Explicit Lyrics", ok: true },
+                { text: "No Bad Words", ok: true },
                 { text: "Founding Price Lock", ok: true },
                 { text: "Cover Art Vetted", ok: true },
               ],
@@ -563,7 +563,7 @@ function ComparisonSection() {
                 { text: "Family-Safe Content", ok: false },
                 { text: "Offline Listening", ok: true },
                 { text: "20+ Genres", ok: true },
-                { text: "No Explicit Lyrics", ok: false },
+                { text: "No Bad Words", ok: false },
                 { text: "Founding Price Lock", ok: false },
                 { text: "Cover Art Vetted", ok: false },
               ],
@@ -578,7 +578,7 @@ function ComparisonSection() {
                 { text: "Family-Safe Content", ok: false },
                 { text: "Offline Listening", ok: true },
                 { text: "20+ Genres", ok: true },
-                { text: "No Explicit Lyrics", ok: false },
+                { text: "No Bad Words", ok: false },
                 { text: "Founding Price Lock", ok: false },
                 { text: "Cover Art Vetted", ok: false },
               ],
@@ -848,7 +848,7 @@ function FAQ() {
       a: "No. Psalmix includes Pop, Rock, Country, Worship, Hip-Hop, Lo-Fi, Classical, and more. Every genre — as long as the content meets our family-friendly standard. Think mainstream radio energy without the mainstream baggage.",
     },
     {
-      q: "How is Psalmix different from a mainstream 'Explicit' filter?",
+      q: "How is Psalmix different from a mainstream filter?",
       a: "Filters catch words. We catch intent. We review every song from a parent's perspective — not just the lyrics, but the mood, themes, and what the song is actually trying to do to your kid's heart. That includes cover art, too.",
     },
     {
@@ -858,6 +858,10 @@ function FAQ() {
     {
       q: "How does the Founding Family price lock work?",
       a: "Founding families who join during the waitlist period are grandfathered into $7.99/month for life — even when we raise prices for new members later. You keep your rate. Always.",
+    },
+    {
+      q: "Will my teen actually like this?",
+      a: "Your teen will either love it or tolerate it. They might not love every song — I don't either. But they won't feel like they're being preached at. The songs have real emotions — sadness, anger, confusion, heartbreak. They just don't end in a dark place. And honestly? Some teens prefer knowing there's a mom behind the music. It makes them feel looked after instead of just... managed.",
     },
   ];
 
