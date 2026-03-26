@@ -368,92 +368,47 @@ function ProblemSection() {
 function PhoneMockup() {
   return (
     <div className="flex justify-center">
-      <svg
-        viewBox="0 0 300 540"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-[260px] drop-shadow-2xl"
-        aria-hidden="true"
+      <div
+        className="relative w-[270px] rounded-[36px] overflow-hidden shadow-2xl shadow-black/50"
+        style={{
+          border: "3px solid #8B4BCF",
+          background: "#111826",
+        }}
       >
-        {/* Phone body */}
-        <rect x="20" y="20" width="260" height="500" rx="32" fill="#111826" stroke="#8B4BCF" strokeWidth="3"/>
-
-        {/* Notch */}
-        <rect x="105" y="32" width="90" height="22" rx="11" fill="#111826" stroke="#8B4BCF" strokeWidth="2"/>
-
-        {/* App header */}
-        <rect x="20" y="54" width="260" height="140" rx="0" fill="#1C2333"/>
-
-        {/* App logo + name */}
-        <text x="44" y="96" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="22" fill="white">♪ Psalmix</text>
-
-        {/* Subtitle */}
-        <text x="44" y="116" fontFamily="system-ui, sans-serif" fontWeight="400" fontSize="10" fill="#94A3B8">Family-Safe Music</text>
-
         {/* Status bar */}
-        <circle cx="236" cy="42" r="3" fill="#8B4BCF"/>
-        <circle cx="244" cy="42" r="3" fill="#06B6D4"/>
-        <rect x="254" y="39" width="16" height="8" rx="2" fill="#8B4BCF"/>
-        <rect x="256" y="41" width="12" height="4" rx="1" fill="#7B3BBF"/>
+        <div
+          className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 py-2"
+          style={{ background: "rgba(17,24,38,0.9)" }}
+        >
+          <span className="text-white/60 text-xs font-medium">11:59</span>
+          <div className="flex items-center gap-1">
+            <div className="w-4 h-2 rounded-sm bg-white/80" />
+            <div className="w-4 h-2 rounded-sm bg-white/80" />
+            <div className="w-4 h-2 rounded-sm bg-[#8B4BCF]" />
+          </div>
+        </div>
 
-        {/* Waveform visualizer */}
-        {[0.3, 0.6, 0.4, 0.8, 0.5, 0.9, 0.35, 0.7, 0.55, 0.75, 0.45, 0.85, 0.4, 0.65, 0.5, 0.8, 0.3, 0.6, 0.45, 0.7].map((h, i) => (
-          <rect
-            key={i}
-            x={44 + i * 9}
-            y={200 - h * 30}
-            width="5"
-            height={h * 60}
-            rx="2.5"
-            fill={i % 3 === 0 ? "#8B4BCF" : i % 3 === 1 ? "#A66BD9" : "#06B6D4"}
-            opacity="0.9"
-          />
-        ))}
+        {/* App screenshot */}
+        <img
+          src="/images/psalmix-now-playing.jpg"
+          alt="PsalMix app - Now Playing screen"
+          className="w-full h-auto block"
+        />
 
-        {/* Now Playing label */}
-        <text x="44" y="240" fontFamily="system-ui, sans-serif" fontWeight="700" fontSize="9" fill="#8B4BCF" letterSpacing="1">NOW PLAYING</text>
-
-        {/* Song title */}
-        <text x="44" y="258" fontFamily="system-ui, sans-serif" fontWeight="700" fontSize="14" fill="white">In the Garden</text>
-
-        {/* Artist */}
-        <text x="44" y="274" fontFamily="system-ui, sans-serif" fontWeight="400" fontSize="11" fill="#94A3B8">Hillsong Worship</text>
-
-        {/* Review badge */}
-        <rect x="44" y="284" width="82" height="16" rx="8" fill="#8B4BCF" opacity="0.15"/>
-        <text x="52" y="295" fontFamily="system-ui, sans-serif" fontWeight="600" fontSize="8" fill="#A66BD9">✓ Human Reviewed</text>
-
-        {/* Progress bar track */}
-        <rect x="44" y="316" width="212" height="3" rx="1.5" fill="#2e3544"/>
-        {/* Progress bar fill */}
-        <rect x="44" y="316" width="130" height="3" rx="1.5" fill="url(#progressGrad)"/>
-        {/* Time */}
-        <text x="44" y="332" fontFamily="system-ui, sans-serif" fontSize="8" fill="#64748B">1:42</text>
-        <text x="256" y="332" fontFamily="system-ui, sans-serif" fontSize="8" fill="#64748B" textAnchor="end">3:28</text>
-
-        {/* Playback controls */}
-        {/* Skip back */}
-        <rect x="110" y="344" width="20" height="20" rx="10" fill="#2e3544"/>
-        <path d="M120 350 L116 354 L120 358 Z" fill="#94A3B8"/>
-        <rect x="115" y="350" width="1.5" height="8" fill="#94A3B8"/>
-        {/* Play/pause */}
-        <rect x="130" y="340" width="40" height="40" rx="20" fill="#8B4BCF"/>
-        <polygon points="145,350 155,355 145,360" fill="white"/>
-        {/* Skip forward */}
-        <rect x="180" y="344" width="20" height="20" rx="10" fill="#2e3544"/>
-        <path d="M190 350 L194 354 L190 358 Z" fill="#94A3B8"/>
-        <rect x="193.5" y="350" width="1.5" height="8" fill="#94A3B8"/>
-
-        {/* Brand tagline at bottom */}
-        <text x="150" y="500" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="11" fill="#8B4BCF" textAnchor="middle" letterSpacing="2">♪ PSALMIX</text>
-
-        <defs>
-          <linearGradient id="progressGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#8B4BCF"/>
-            <stop offset="100%" stopColor="#06B6D4"/>
-          </linearGradient>
-        </defs>
-      </svg>
+        {/* Bottom nav bar */}
+        <div
+          className="absolute bottom-0 left-0 right-0 flex items-center justify-around py-3 px-6"
+          style={{ background: "rgba(17,24,38,0.95)" }}
+        >
+          <div className="text-[#64748B] text-[10px] font-medium">Share</div>
+          <div className="text-white text-[10px] font-bold flex flex-col items-center gap-0.5">
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-3c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/>
+            </svg>
+            <span>Queue</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
