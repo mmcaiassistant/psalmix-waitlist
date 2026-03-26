@@ -7,7 +7,7 @@ import {
   Menu, ShieldCheck, Clock, Headphones, Globe, MonitorSmartphone,
   CheckCircle2, XCircle, Star, Users, BadgeCheck, MessageSquare,
   Ban, UserSearch, Lock, ChevronDown, Sparkles, Mail,
-  Download, Smartphone, Laptop
+  Download, Smartphone, Laptop, SkipForward, AlertTriangle, Eye
 } from "lucide-react";
 
 // ─── Navbar ────────────────────────────────────────────────────────────────────
@@ -183,7 +183,7 @@ function Hero() {
         {/* Trust tag pills above headline */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
           <span className="px-4 py-1.5 rounded-full border border-[#8B4BCF]/30 text-xs font-bold text-[#A66BD9] uppercase tracking-wider flex items-center gap-2">
-            <ShieldCheck className="w-3.5 h-3.5" /> Human Reviewed
+            <ShieldCheck className="w-3.5 h-3.5" /> Mom-Approved
           </span>
           <span className="px-4 py-1.5 rounded-full border border-white/10 text-xs font-bold text-[#94A3B8] uppercase tracking-wider flex items-center gap-2">
             <Download className="w-3.5 h-3.5" /> Offline Ready
@@ -193,11 +193,10 @@ function Hero() {
           </span>
         </div>
 
-        {/* Headline */}
+        {/* Headline — from PsalMix Messaging Guide */}
         <h1 className="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight text-white mb-6">
-          Family-Safe Music.{" "}
+          Music I'd Let My Own Kids{" "}
           <span
-            className="italic"
             style={{
               background: "linear-gradient(135deg, #A66BD9 0%, #8B4BCF 50%, #06B6D4 100%)",
               WebkitBackgroundClip: "text",
@@ -205,13 +204,13 @@ function Hero() {
               backgroundClip: "text",
             }}
           >
-            Finally.
+            Listen To.
           </span>
         </h1>
 
-        {/* Subheadline */}
+        {/* Subheadline — from PsalMix Messaging Guide */}
         <p className="text-lg md:text-xl text-[#94A3B8] max-w-2xl mx-auto mb-10 leading-relaxed">
-          Every song is reviewed by real people — Christian musicians and homeschool parents — before it ever reaches your kids. No surprises. No sketchy playlists. Just music your whole family can feel good about.
+          Every song on PsalMix is personally approved by me — a conservative Christian mom. Not just no bad words. Songs that won't fill your kids with rebellion, angst, or content you'd never choose for them.
         </p>
 
         {/* Email form */}
@@ -316,32 +315,32 @@ function ProblemSection() {
       <div className="max-w-5xl mx-auto space-y-12">
         <div className="text-center space-y-4">
           <h2 className="text-3xl md:text-4xl font-black text-white">
-            The music industry has a problem.
+            Sound familiar?
           </h2>
-          <p className="text-[#94A3B8] text-lg">
-            Current apps aren't designed for families who care about content.
+          <p className="text-[#94A3B8] text-lg max-w-2xl mx-auto">
+            Even with filters on, mainstream music still carries messages most parents never chose for their kids.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
-              icon: ShieldCheck,
+              icon: SkipForward,
               color: "#ef4444",
-              title: "Unvetted Lyrics",
-              desc: "Your kids are singing songs you would never choose, thanks to algorithmic recommendations.",
+              title: "The skip button is your nemesis",
+              desc: "You said yes to music, not to hitting skip every 90 seconds. Filters catch the f-bombs but not the 'I want to die' in the bridge.",
             },
             {
               icon: Clock,
               color: "#06B6D4",
-              title: "Wasted Time",
-              desc: "You spend hours curating playlists just to make sure they're safe for a 15-minute car ride.",
+              title: "Playlist curation is a full-time job",
+              desc: "You spend hours carefully curating playlists — and you're still one song away from an awkward car ride moment.",
             },
             {
-              icon: Headphones,
+              icon: AlertTriangle,
               color: "#8B4BCF",
-              title: "Assumed Consent",
-              desc: 'Mainstream apps assume you\'re okay with explicit content and make "clean" versions hard to find.',
+              title: "Filters are a suggestion, not a wall",
+              desc: 'Mainstream apps assume you\'re okay with "clean" versions — they make them hard to find and they\'re still full of questionable content.',
             },
           ].map(({ icon: Icon, color, title, desc }) => (
             <div
@@ -750,13 +749,28 @@ function Guarantee() {
     <section className="py-20 px-6">
       <div className="max-w-4xl mx-auto grid sm:grid-cols-3 gap-6">
         {[
-          { icon: Ban, color: "#8B4BCF", title: "Cancel Anytime" },
-          { icon: UserSearch, color: "#06B6D4", title: "Human-Reviewed" },
-          { icon: Lock, color: "#F59E0B", title: "Founding Price" },
-        ].map(({ icon: Icon, color, title }) => (
+          {
+            icon: ShieldCheck,
+            color: "#8B4BCF",
+            title: "Every Song Reviewed",
+            desc: "Real people — not an algorithm — listen to every song before it goes live."
+          },
+          {
+            icon: Eye,
+            color: "#06B6D4",
+            title: "Beyond the Lyrics",
+            desc: "We review mood, themes, and intent — not just whether a bad word appears."
+          },
+          {
+            icon: Ban,
+            color: "#F59E0B",
+            title: "Cancel Anytime",
+            desc: "No contracts. No catch. If it's not working, you can walk away."
+          },
+        ].map(({ icon: Icon, color, title, desc }) => (
           <div
             key={title}
-            className="p-6 rounded-2xl border border-white/10 flex items-center gap-4"
+            className="p-6 rounded-2xl border border-white/10 flex flex-col items-start gap-3"
             style={{ background: "#1C2333" }}
           >
             <div
@@ -765,7 +779,10 @@ function Guarantee() {
             >
               <Icon className="w-6 h-6" />
             </div>
-            <h5 className="font-bold text-white">{title}</h5>
+            <div>
+              <h5 className="font-bold text-white mb-1">{title}</h5>
+              <p className="text-[#94A3B8] text-xs leading-relaxed">{desc}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -824,23 +841,23 @@ function FAQ() {
   const faqs = [
     {
       q: "When does Psalmix launch?",
-      a: "We are currently in beta and plan to launch publicly later this year. Founding families get immediate access.",
+      a: "We're in private beta now. Founding families get early access and a locked-in $7.99/month rate for life — you'll get an invite as soon as your spot opens up.",
     },
     {
-      q: "How is Psalmix different from Spotify's 'Explicit' filter?",
-      a: "Spotify's filter only blocks songs with EXPLICIT tags — it misses songs with suggestive lyrics, double entendres, and inappropriate cover art. Psalmix has a human review every track from a family's perspective.",
+      q: "Is this just Christian music?",
+      a: "No. Psalmix includes Pop, Rock, Country, Worship, Hip-Hop, Lo-Fi, Classical, and more. Every genre — as long as the content meets our family-friendly standard. Think mainstream radio energy without the mainstream baggage.",
+    },
+    {
+      q: "How is Psalmix different from a mainstream 'Explicit' filter?",
+      a: "Filters catch words. We catch intent. We review every song from a parent's perspective — not just the lyrics, but the mood, themes, and what the song is actually trying to do to your kid's heart. That includes cover art, too.",
     },
     {
       q: "Can I cancel anytime?",
-      a: "Yes. There are no contracts and no cancellation fees. You can cancel your subscription at any time from your account settings.",
-    },
-    {
-      q: "What devices are supported?",
-      a: "Psalmix will be available on iOS, Android, Mac, Windows, and web. All with seamless offline syncing across your devices.",
+      a: "Yes. No contracts, no cancellation fees. If it's not working for your family, you can walk away — no hard feelings.",
     },
     {
       q: "How does the Founding Family price lock work?",
-      a: "Founding members who join during the waitlist period will be grandfathered into the $7.99/month rate permanently — even if prices increase for new members in the future.",
+      a: "Founding families who join during the waitlist period are grandfathered into $7.99/month for life — even when we raise prices for new members later. You keep your rate. Always.",
     },
   ];
 
