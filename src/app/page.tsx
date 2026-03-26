@@ -6,45 +6,14 @@ import React from "react";
 import {
   Menu, ShieldCheck, Clock, Headphones, Globe, MonitorSmartphone,
   CheckCircle2, XCircle, Star, Users, BadgeCheck, MessageSquare,
-  Ban, UserSearch, Lock, ChevronDown, Sparkles, Mail, CheckCircle,
+  Ban, UserSearch, Lock, ChevronDown, Sparkles, Mail,
   Download, Smartphone, Laptop
 } from "lucide-react";
 
-// ─── PsalMix Brand Colors ─────────────────────────────────────────────────────
-const BRAND = {
-  background:   "#111826",  // Page background
-  surface:       "#1C2333",  // Cards/containers
-  surfaceHover:  "#262D3D",  // Hover state
-  primary:       "#8B4BCF",  // Psalmix Purple
-  primaryHover:  "#7B3BBF",  // Hover
-  primaryLight:  "#A66BD9",  // Light variant
-  text:          "#FFFFFF",
-  textSecondary: "#94A3B8",
-  textMuted:     "#64748B",
-  border:        "rgba(255,255,255,0.08)",
-};
-
-// ─── Icons ────────────────────────────────────────────────────────────────────
-const Icons = {
-  shieldCheck: ShieldCheck,
-  download:    Download,
-  smartphone:  Smartphone,
-  laptop:      Laptop,
-  globe:       Globe,
-  mail:        Mail,
-  sparkles:    Sparkles,
-  checkCircle: CheckCircle,
-  users:       Users,
-  star:        Star,
-  badgeCheck:  BadgeCheck,
-  messageSquare: MessageSquare,
-  ban:         Ban,
-  userSearch:  UserSearch,
-  lock:        Lock,
-};
-
 // ─── Navbar ────────────────────────────────────────────────────────────────────
 function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#111826]/90 backdrop-blur-xl border-b border-white/10">
       <div className="flex justify-between items-center max-w-6xl mx-auto px-6 md:px-8 h-16 md:h-20">
@@ -62,10 +31,33 @@ function Navbar() {
             Save My Spot
           </a>
         </div>
-        <button className="md:hidden text-white">
-          <Menu className="w-6 h-6" />
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden text-white"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? (
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
         </button>
       </div>
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#111826] border-t border-white/10 px-6 py-6 flex flex-col gap-5">
+          <a href="#features" onClick={() => setMenuOpen(false)} className="text-[#94A3B8] hover:text-white transition-colors font-medium">Features</a>
+          <a href="#how-it-works" onClick={() => setMenuOpen(false)} className="text-[#94A3B8] hover:text-white transition-colors font-medium">How it Works</a>
+          <a href="#faq" onClick={() => setMenuOpen(false)} className="text-[#94A3B8] hover:text-white transition-colors font-medium">FAQ</a>
+          <a href="#signup" onClick={() => setMenuOpen(false)} className="bg-[#8B4BCF] text-white px-5 py-3 rounded-full font-bold text-sm text-center hover:bg-[#7B3BBF] transition-all">
+            Save My Spot
+          </a>
+        </div>
+      )}
     </nav>
   );
 }
@@ -104,7 +96,7 @@ function SignupForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
     return (
       <div className="rounded-2xl bg-[#1C2333] border border-white/10 p-8 text-center max-w-md mx-auto shadow-xl">
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
-          <Icons.checkCircle className="w-8 h-8 text-green-400" />
+          <CheckCircle2 className="w-8 h-8 text-green-400" />
         </div>
         <h3 className="text-xl font-bold text-white mb-2">
           {alreadyOnList ? "You're already on the list!" : "You're in!"}
@@ -121,7 +113,7 @@ function SignupForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
       <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto" id="signup">
         <div className="rounded-2xl border border-white/10 shadow-xl overflow-hidden flex flex-col sm:flex-row">
           <div className="flex items-center px-5 py-4 flex-grow bg-[#1C2333]">
-            <Icons.mail className="w-5 h-5 text-[#64748B] mr-3 flex-shrink-0" />
+            <Mail className="w-5 h-5 text-[#64748B] mr-3 flex-shrink-0" />
             <input
               type="email"
               required
@@ -246,7 +238,7 @@ function FounderStory() {
   return (
     <section
       id="how-it-works"
-      className="py-24 px-6 bg-[#1C2333]/50"
+      className="py-24 px-6 bg-[#1C2333]/50 scroll-mt-20"
     >
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
         {/* Avatar */}
@@ -360,7 +352,7 @@ function SolutionSection() {
   return (
     <section
       id="features"
-      className="py-24 px-6"
+      className="py-24 px-6 scroll-mt-20"
       style={{ background: "#1C2333/40" }}
     >
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
@@ -555,11 +547,20 @@ function ComparisonSection() {
 }
 
 // ─── Founding Family / CTA ────────────────────────────────────────────────────
-function FoundingFamily() {
+// Accepts count and spotsRemaining as props for real data
+function FoundingFamily({
+  totalCount,
+  spotsRemaining,
+  progressPercent,
+}: {
+  totalCount: number | null;
+  spotsRemaining: number | null;
+  progressPercent: number;
+}) {
   return (
     <section
       id="signup"
-      className="py-24 px-6"
+      className="py-24 px-6 scroll-mt-20"
       style={{ background: "#1C2333/50" }}
     >
       <div className="max-w-3xl mx-auto text-center space-y-8">
@@ -583,20 +584,23 @@ function FoundingFamily() {
               Spots Claimed
             </span>
             <span className="text-2xl font-black text-white">
-              <WaitlistCount />
+              {totalCount !== null ? totalCount.toLocaleString() : "—"}
             </span>
           </div>
           <div className="w-full h-3 rounded-full overflow-hidden" style={{ background: "#111826" }}>
             <div
-              className="h-full rounded-full"
+              className="h-full rounded-full transition-all duration-500"
               style={{
                 background: "linear-gradient(90deg, #8B4BCF, #06B6D4)",
-                width: "82.4%",
+                width: `${progressPercent}%`,
               }}
             />
           </div>
           <p className="text-sm text-[#64748B]">
-            88 spots remaining. Founding families get lifetime $7.99/mo pricing.
+            {spotsRemaining !== null
+              ? `${spotsRemaining.toLocaleString()} spots remaining.`
+              : "Loading spot count..."}{" "}
+            Founding families get lifetime $7.99/mo pricing.
           </p>
         </div>
 
@@ -628,10 +632,11 @@ function WaitlistCount() {
   const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch("/api/waitlist-count")
+    // Endpoint is /api/stats which returns { total: N }
+    fetch("/api/stats")
       .then((r) => r.json())
       .then((d) => {
-        if (d.count !== undefined) setCount(d.count);
+        if (d.total !== undefined) setCount(d.total);
       })
       .catch(() => {});
   }, []);
@@ -672,20 +677,40 @@ function Guarantee() {
 // ─── FAQ ───────────────────────────────────────────────────────────────────────
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
+  const answerId = `faq-answer-${question.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase().slice(0, 20)}`;
+  const buttonId = `faq-btn-${question.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase().slice(0, 20)}`;
+
+  const toggle = () => setIsOpen((v) => !v);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggle();
+    }
+  };
+
   return (
     <div className="border-b border-white/10">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        id={buttonId}
+        aria-expanded={isOpen}
+        aria-controls={answerId}
+        onClick={toggle}
+        onKeyDown={handleKeyDown}
         className="w-full flex justify-between items-center py-5 text-left font-semibold text-white hover:text-[#A66BD9] transition-colors"
       >
         <span>{question}</span>
         <ChevronDown
+          aria-hidden="true"
           className={`w-5 h-5 flex-shrink-0 transition-transform duration-200 ${
             isOpen ? "rotate-180 text-[#8B4BCF]" : "text-[#64748B]"
           }`}
         />
       </button>
       <div
+        id={answerId}
+        role="region"
+        aria-labelledby={buttonId}
         className={`overflow-hidden transition-all duration-300 ${
           isOpen ? "max-h-40 pb-5 opacity-100" : "max-h-0 opacity-0"
         }`}
@@ -721,7 +746,7 @@ function FAQ() {
   ];
 
   return (
-    <section id="faq" className="py-24 px-6">
+    <section id="faq" className="py-24 px-6 scroll-mt-20">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-black text-white mb-3">
@@ -827,13 +852,15 @@ export default function Home() {
   const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch("/api/waitlist-count")
+    // Correct endpoint: /api/stats returns { total: N }
+    fetch("/api/stats")
       .then((r) => r.json())
-      .then((d) => { if (d.count !== undefined) setCount(d.count); })
+      .then((d) => { if (d.total !== undefined) setCount(d.total); })
       .catch(() => {});
   }, []);
 
   const spotsRemaining = count !== null ? Math.max(0, 500 - count) : null;
+  const progressPercent = count !== null ? Math.min(100, (count / 500) * 100) : 82.4;
 
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#111826] flex items-center justify-center">
@@ -848,7 +875,11 @@ export default function Home() {
           <SolutionSection />
           <ComparisonSection />
           <Guarantee />
-          <FoundingFamily />
+          <FoundingFamily
+            totalCount={count}
+            spotsRemaining={spotsRemaining}
+            progressPercent={progressPercent}
+          />
           <FAQ />
           <FinalCTA />
         </main>
