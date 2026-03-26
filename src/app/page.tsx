@@ -367,9 +367,9 @@ function ProblemSection() {
 // ─── Custom SVG Phone Mockup ──────────────────────────────────────────────────
 function PhoneMockup() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pb-4">
       <div
-        className="relative w-[270px] rounded-[36px] overflow-hidden shadow-2xl shadow-black/50"
+        className="relative w-[240px] rounded-[32px] overflow-hidden shadow-2xl shadow-black/50"
         style={{
           border: "3px solid #8B4BCF",
           background: "#111826",
