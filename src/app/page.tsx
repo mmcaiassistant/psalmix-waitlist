@@ -112,7 +112,7 @@ function SignupForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
     return (
       <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto" id="signup">
         <div className="rounded-2xl border border-white/10 shadow-xl overflow-hidden flex flex-col sm:flex-row">
-          <div className="flex items-center px-5 py-4 flex-grow bg-[#1C2333]">
+          <div className="flex items-center px-5 h-14 flex-grow bg-[#1C2333]">
             <Mail className="w-5 h-5 text-[#64748B] mr-3 flex-shrink-0" />
             <input
               type="email"
@@ -126,7 +126,7 @@ function SignupForm({ variant = "hero" }: { variant?: "hero" | "footer" }) {
           <button
             type="submit"
             disabled={status === "loading"}
-            className="bg-[#8B4BCF] text-white px-8 py-4 font-bold text-base hover:bg-[#7B3BBF] transition-all disabled:opacity-60 whitespace-nowrap"
+            className="bg-[#8B4BCF] text-white px-8 h-14 font-bold text-base hover:bg-[#7B3BBF] transition-all disabled:opacity-60 whitespace-nowrap flex items-center justify-center"
           >
             {status === "loading" ? "Saving your spot..." : "Save My Spot — It's Free"}
           </button>
@@ -240,51 +240,70 @@ function FounderStory() {
       id="how-it-works"
       className="py-24 px-6 bg-[#1C2333]/50 scroll-mt-20"
     >
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
-        {/* Avatar */}
-        <div className="relative flex-shrink-0">
-          <div
-            className="w-48 h-48 md:w-56 md:h-56 rounded-full p-1.5"
-            style={{
-              background: "linear-gradient(135deg, #8B4BCF, #A66BD9, #06B6D4)",
-            }}
-          >
-            <img
-              className="w-full h-full object-cover rounded-full"
-              style={{ background: "#1C2333" }}
-              alt="McKinzie Bean, Founder"
-              src="/images/mckinzie-headshot.jpg"
-            />
-          </div>
-        </div>
-
-        {/* Text */}
-        <div className="space-y-5 text-center md:text-left">
+      <div className="max-w-5xl mx-auto">
+        {/* Section label */}
+        <div className="text-center mb-12">
           <span className="text-[#8B4BCF] font-bold tracking-widest text-xs uppercase">
             Founder's Story
           </span>
-          <blockquote
-            className="text-2xl md:text-3xl font-bold leading-snug italic text-white"
-            style={{ fontFamily: "Georgia, serif" }}
-          >
-            "The turning point was realizing I couldn't keep reacting to what my
-            kids heard. I needed a space where safety was the default, not an
-            option."
-          </blockquote>
-          <p className="text-[#94A3B8] text-base leading-relaxed">
-            McKinzie built Psalmix after years of frustration with "clean" filters
-            that missed explicit themes and questionable cover art. Every single
-            track is vetted by a human ear.
-          </p>
-          <div
-            className="p-5 rounded-xl border border-white/10 inline-flex items-center gap-3"
-            style={{ background: "#1C2333" }}
-          >
-            <BadgeCheck className="w-5 h-5 text-[#8B4BCF] flex-shrink-0" />
-            <p className="text-sm font-medium text-white">
-              Every song and cover image is reviewed personally.
-            </p>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-14 items-center">
+
+          {/* Photo column */}
+          <div className="flex-shrink-0 flex flex-col items-center gap-4">
+            {/* Gradient ring */}
+            <div
+              className="w-48 h-48 md:w-56 md:h-56 rounded-full p-1.5"
+              style={{
+                background: "linear-gradient(135deg, #8B4BCF, #A66BD9, #06B6D4)",
+              }}
+            >
+              <img
+                className="w-full h-full object-cover object-top rounded-full"
+                style={{ background: "#1C2333" }}
+                alt="McKinzie Bean, Founder"
+                src="/images/mckinzie-headshot.jpg"
+              />
+            </div>
+            {/* Name + title */}
+            <div className="text-center">
+              <p className="font-bold text-white text-base">McKinzie Bean</p>
+              <p className="text-xs text-[#94A3B8] mt-0.5">Founder · Singer/songwriter · Mom of 3</p>
+            </div>
+            {/* Role tags */}
+            <div className="flex flex-wrap justify-center gap-2">
+              <span className="px-3 py-1 rounded-full bg-[#8B4BCF]/15 border border-[#8B4BCF]/25 text-[#A66BD9] text-xs font-semibold">Singer & songwriter</span>
+              <span className="px-3 py-1 rounded-full bg-[#8B4BCF]/15 border border-[#8B4BCF]/25 text-[#A66BD9] text-xs font-semibold">Homeschool mom of 3</span>
+            </div>
           </div>
+
+          {/* Quote column */}
+          <div className="flex-1">
+            {/* Big decorative quote mark */}
+            <div
+              className="text-[96px] leading-none select-none mb-[-24px]"
+              style={{ color: "rgba(139,75,207,0.25)", fontFamily: "Georgia, serif" }}
+            >
+              &ldquo;
+            </div>
+            <blockquote className="text-white text-xl md:text-2xl leading-relaxed font-medium mb-5">
+              The turning point was realizing I couldn't keep reacting. I'd hear something on the radio or catch a lyric on Spotify and think — how long has my kid been singing along to that?
+            </blockquote>
+            <p className="text-white/80 text-base leading-relaxed mb-6">
+              I'm a singer and songwriter — I know how deeply music shapes the way we see the world. As a homeschool mom juggling a preteen, an elementary-aged child, and a toddler, I couldn't keep reacting. So I built the thing I couldn't find anywhere else: music my kids actually love, with zero surprises. That's Psalmix.
+            </p>
+            {/* Trust badge */}
+            <div className="flex items-start gap-3 bg-[#8B4BCF]/8 border border-[#8B4BCF]/20 rounded-2xl px-5 py-4">
+              <svg className="w-5 h-5 text-[#8B4BCF] mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Every song and cover image is reviewed by McKinzie and our team of Christian musicians and educators before it reaches your family. Not an algorithm — real people who care.
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -347,6 +366,100 @@ function ProblemSection() {
   );
 }
 
+// ─── Custom SVG Phone Mockup ──────────────────────────────────────────────────
+function PhoneMockup() {
+  return (
+    <div className="flex justify-center">
+      <svg
+        viewBox="0 0 300 540"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-[260px] drop-shadow-2xl"
+        aria-hidden="true"
+      >
+        {/* Phone body */}
+        <rect x="20" y="20" width="260" height="500" rx="32" fill="#111826" stroke="#8B4BCF" strokeWidth="3"/>
+
+        {/* Notch */}
+        <rect x="105" y="32" width="90" height="22" rx="11" fill="#111826" stroke="#8B4BCF" strokeWidth="2"/>
+
+        {/* App header */}
+        <rect x="20" y="54" width="260" height="140" rx="0" fill="#1C2333"/>
+
+        {/* App logo + name */}
+        <text x="44" y="96" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="22" fill="white">♪ Psalmix</text>
+
+        {/* Subtitle */}
+        <text x="44" y="116" fontFamily="system-ui, sans-serif" fontWeight="400" fontSize="10" fill="#94A3B8">Family-Safe Music</text>
+
+        {/* Status bar */}
+        <circle cx="236" cy="42" r="3" fill="#8B4BCF"/>
+        <circle cx="244" cy="42" r="3" fill="#06B6D4"/>
+        <rect x="254" y="39" width="16" height="8" rx="2" fill="#8B4BCF"/>
+        <rect x="256" y="41" width="12" height="4" rx="1" fill="#7B3BBF"/>
+
+        {/* Waveform visualizer */}
+        {[0.3, 0.6, 0.4, 0.8, 0.5, 0.9, 0.35, 0.7, 0.55, 0.75, 0.45, 0.85, 0.4, 0.65, 0.5, 0.8, 0.3, 0.6, 0.45, 0.7].map((h, i) => (
+          <rect
+            key={i}
+            x={44 + i * 9}
+            y={200 - h * 30}
+            width="5"
+            height={h * 60}
+            rx="2.5"
+            fill={i % 3 === 0 ? "#8B4BCF" : i % 3 === 1 ? "#A66BD9" : "#06B6D4"}
+            opacity="0.9"
+          />
+        ))}
+
+        {/* Now Playing label */}
+        <text x="44" y="240" fontFamily="system-ui, sans-serif" fontWeight="700" fontSize="9" fill="#8B4BCF" letterSpacing="1">NOW PLAYING</text>
+
+        {/* Song title */}
+        <text x="44" y="258" fontFamily="system-ui, sans-serif" fontWeight="700" fontSize="14" fill="white">In the Garden</text>
+
+        {/* Artist */}
+        <text x="44" y="274" fontFamily="system-ui, sans-serif" fontWeight="400" fontSize="11" fill="#94A3B8">Hillsong Worship</text>
+
+        {/* Review badge */}
+        <rect x="44" y="284" width="82" height="16" rx="8" fill="#8B4BCF" opacity="0.15"/>
+        <text x="52" y="295" fontFamily="system-ui, sans-serif" fontWeight="600" fontSize="8" fill="#A66BD9">✓ Human Reviewed</text>
+
+        {/* Progress bar track */}
+        <rect x="44" y="316" width="212" height="3" rx="1.5" fill="#2e3544"/>
+        {/* Progress bar fill */}
+        <rect x="44" y="316" width="130" height="3" rx="1.5" fill="url(#progressGrad)"/>
+        {/* Time */}
+        <text x="44" y="332" fontFamily="system-ui, sans-serif" fontSize="8" fill="#64748B">1:42</text>
+        <text x="256" y="332" fontFamily="system-ui, sans-serif" fontSize="8" fill="#64748B" textAnchor="end">3:28</text>
+
+        {/* Playback controls */}
+        {/* Skip back */}
+        <rect x="110" y="344" width="20" height="20" rx="10" fill="#2e3544"/>
+        <path d="M120 350 L116 354 L120 358 Z" fill="#94A3B8"/>
+        <rect x="115" y="350" width="1.5" height="8" fill="#94A3B8"/>
+        {/* Play/pause */}
+        <rect x="130" y="340" width="40" height="40" rx="20" fill="#8B4BCF"/>
+        <polygon points="145,350 155,355 145,360" fill="white"/>
+        {/* Skip forward */}
+        <rect x="180" y="344" width="20" height="20" rx="10" fill="#2e3544"/>
+        <path d="M190 350 L194 354 L190 358 Z" fill="#94A3B8"/>
+        <rect x="193.5" y="350" width="1.5" height="8" fill="#94A3B8"/>
+
+        {/* Brand tagline at bottom */}
+        <text x="150" y="500" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="11" fill="#8B4BCF" textAnchor="middle" letterSpacing="2">♪ PSALMIX</text>
+
+        <defs>
+          <linearGradient id="progressGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#8B4BCF"/>
+            <stop offset="100%" stopColor="#06B6D4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+}
+
 // ─── Solution Section ─────────────────────────────────────────────────────────
 function SolutionSection() {
   return (
@@ -359,11 +472,11 @@ function SolutionSection() {
         <div className="space-y-8">
           <div className="space-y-3">
             <h2 className="text-3xl md:text-4xl font-black text-white">
-              Psalmix is the solution.
+              Built on trust.
             </h2>
             <p className="text-[#94A3B8] leading-relaxed">
-              We re-imagined the music app from the ground up, placing human
-              integrity at the core of every playback.
+              We didn't just filter content — we rebuilt the entire streaming model
+              around one principle: your family deserves to feel safe.
             </p>
           </div>
 
@@ -372,20 +485,20 @@ function SolutionSection() {
               {
                 icon: ShieldCheck,
                 color: "#8B4BCF",
-                title: "Every Song, Human-Reviewed",
-                desc: "Zero reliance on labels. If it's on Psalmix, a real human has listened and approved it.",
+                title: "Real Ears, Not Algorithms",
+                desc: "Every song is reviewed by real people — Christian musicians and homeschool parents — before it ever reaches your kids.",
               },
               {
                 icon: Globe,
                 color: "#06B6D4",
-                title: "20+ Genres, All Clean",
-                desc: "From Pop to Lo-Fi, Worship to Classical. Your favorite genres, strictly curated.",
+                title: "Zero Surprises, Guaranteed",
+                desc: "No hidden lyrics. No surprise content. No algorithmic rabbit holes. What you see is what your kids hear.",
               },
               {
-                icon: MonitorSmartphone,
-                color: "#F59E0B",
-                title: "Any Device, Anywhere",
-                desc: "Seamless transition from your home speakers to your phone to your desktop.",
+                icon: Users,
+                color: "#A66BD9",
+                title: "Built by Families, for Families",
+                desc: "Psalmix was created by a homeschool mom who needed something that didn't exist — and tested it on her own kids first.",
               },
             ].map(({ icon: Icon, color, title, desc }) => (
               <div key={title} className="flex gap-5">
@@ -404,21 +517,8 @@ function SolutionSection() {
           </div>
         </div>
 
-        {/* Right: musician image */}
-        <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-          <img
-            className="w-full object-cover h-[400px]"
-            alt="Concert stage"
-            src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(17,24,38,0.8) 0%, transparent 50%)",
-            }}
-          />
-        </div>
+        {/* Right: custom phone mockup */}
+        <PhoneMockup />
       </div>
     </section>
   );
@@ -599,7 +699,7 @@ function FoundingFamily({
           <p className="text-sm text-[#64748B]">
             {spotsRemaining !== null
               ? `${spotsRemaining.toLocaleString()} spots remaining.`
-              : "Loading spot count..."}{" "}
+              : "Spots filling up fast."}{" "}
             Founding families get lifetime $7.99/mo pricing.
           </p>
         </div>
